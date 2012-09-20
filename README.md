@@ -10,7 +10,7 @@ October 29, 2012
 
 We aim to finish October 22, 2012
 
-Meggy Jr not recognized by Mac OS X
+Meggy Jr is not recognized by Mac OS X?
 ==================================
 
 According to [this page](http://www2.evilmadscientist.com/forum/viewtopic.php?showtopic=4890),
