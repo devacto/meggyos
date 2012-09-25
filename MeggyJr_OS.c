@@ -1,25 +1,37 @@
-#include <MeggyJr.h>
+/*
+ * This is the 
+ *
+*/
+// To compile and install:
+//   avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -o screen.out screen.c
+//   avr-objcopy -O ihex -R .eeprom screen.out screen.hex
+//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/ttyUSB0 -U flash:w:screen.hex
 
-uint8_t CT[14][3] = 
-     {{MeggyDark},  
-      {MeggyRed},
-      {MeggyOrange},
-      {MeggyYellow},
-      {MeggyGreen},
-      {MeggyBlue},
-      {MeggyViolet},
-      {MeggyWhite},
-      {0,0,1},     
-      {0,1,0},      
-      {1,0,0},
-      {1,1,0},
-      {0,3,1},
-      {2,0,1}};       
-     
-enum colors {Dark, Red, Orange, Yellow, Green, Blue, Violet, White, 
-         dimBlue, dimGreen, dimRed, dimYellow, dimAqua, dimViolet };
 
-uint8_t redMatrix[9];
-uint8_t grnMatrix[9];
-uint8_t bluMatrix[9];
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <avr/sleep.h>
+
+main() {
+   DDRB |= 1<<PB1;   // set pin 15 to output
+   
+   TCCR2A = (1<<WGM21); // clear timer on compare match
+   TCCR2B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
+   OCR2A  = 100; 
+   TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
+
+   sei( );    // Enable interrupts
+
+   while (1) {
+   }  
+} 
+
+SIGNAL(TIMER2_COMPA_vect)
+{
+   if (PORTB & 1<<PB1) {
+      PORTB &= ~(1<<PB1);   // set pin 15 low
+   } else {
+      PORTB |= 1<<PB1;   // set pin 15 high
+   }
+}
 
