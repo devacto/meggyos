@@ -16,3 +16,13 @@ Meggy Jr is not recognized by Mac OS X?
 According to [this page](http://www2.evilmadscientist.com/forum/viewtopic.php?showtopic=4890),
 first check the cable connection. If it still doesn't work, download FTDI VCP
 from [here](http://www.ftdichip.com/Drivers/VCP.htm)
+
+
+AVR working suit on Mac OS X
+==================================
+* AVR-GCC compilor
+    sudo port install avr-gcc
+* AVC C library
+    sudo port install avr-libc
+* AVR DUDE ?
+    sudo port install avrdude
