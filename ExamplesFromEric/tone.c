@@ -5,8 +5,11 @@
 // To compile and install:
 //   avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -o tone.out tone.c
 //   avr-objcopy -O ihex -R .eeprom tone.out tone.hex
-//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/ttyUSB0 -U flash:w:tone.hex
+//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/ttyusb0 -U flash:w:tone.hex
 
+
+// For Mac OSX, change the last code to:
+//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/tty.usbserial-A501JU54 -U flash:w:tone.hex
 
 #include <avr/io.h>
 

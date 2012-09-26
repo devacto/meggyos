@@ -9,6 +9,9 @@
 //   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/ttyUSB0 -U flash:w:lights.hex
 
 
+// For Mac OSX, change the last code to:
+//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/tty.usbserial-A501JU54 -U flash:w:lights.hex
+
 #include <avr/io.h>
 
 void delay(uint16_t ms) {
