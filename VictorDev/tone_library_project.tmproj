@@ -3,86 +3,213 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>Developer/MeggyJr/meggyos/VictorDev/tonelib.h</string>
+	<string>compile_main.sh</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
+			<string>compile_main.sh</string>
+			<key>lastUsed</key>
+			<date>2012-09-26T08:00:42Z</date>
+			<key>selected</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>filename</key>
 			<string>high_tone.c</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T06:43:23Z</date>
+			<date>2012-09-26T08:00:06Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>compile_high_tone.sh</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T06:43:24Z</date>
+			<date>2012-09-26T07:58:01Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>main.c</string>
+			<key>lastUsed</key>
+			<date>2012-09-26T08:00:41Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tonelib.c</string>
+			<key>lastUsed</key>
+			<date>2012-09-26T08:00:42Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>tonelib.h</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T06:43:24Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2012-09-26T07:59:56Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
-		<key>Developer/MeggyJr/meggyos/VictorDev/compile_high_tone.sh</key>
+		<key>compile_high_tone.sh</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>36</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>Developer/MeggyJr/meggyos/VictorDev/high_tone.c</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>26</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>Developer/MeggyJr/meggyos/VictorDev/tonelib.h</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>9</integer>
+				<integer>94</integer>
 				<key>line</key>
 				<integer>8</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>94</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+		</dict>
+		<key>compile_main.sh</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>89</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+		</dict>
+		<key>high_tone.c</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>10</integer>
+			</dict>
+		</dict>
+		<key>main.c</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>1</integer>
+				<key>line</key>
+				<integer>7</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>tonelib.c</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>19</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>tonelib.h</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>7</integer>
+				<key>line</key>
+				<integer>110</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>62</integer>
+				<key>line</key>
+				<integer>110</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>7</integer>
+				<key>line</key>
+				<integer>110</integer>
+			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>Developer/MeggyJr/meggyos/VictorDev/high_tone.c</string>
-		<string>Developer/MeggyJr/meggyos/VictorDev/compile_high_tone.sh</string>
-		<string>Developer/MeggyJr/meggyos/VictorDev/tonelib.h</string>
+		<string>high_tone.c</string>
+		<string>compile_main.sh</string>
+		<string>compile_high_tone.sh</string>
+		<string>tonelib.h</string>
+		<string>tonelib.c</string>
+		<string>main.c</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
-	<true/>
+	<false/>
 	<key>windowFrame</key>
-	<string>{{329, 4}, {910, 874}}</string>
+	<string>{{882, 4}, {557, 874}}</string>
 </dict>
 </plist>
