@@ -1,6 +1,6 @@
 
 // Simple Screen for the meggyjr - draw the screen from a frame buffer. 
-// Eric McCreath 2012  - GPLv3
+// Eric McCreath 2012  - GLPv3
 
 // To compile and install:
 //   avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -o screen.out screen.c
@@ -49,17 +49,32 @@ void initFrameBuffer() {
    DDRB |= (1<<PB0); // row 7
    PORTB |= (1<<PB0); 
 
-   DDRB |= (1<<PD4); // row 8
-   PORTB |= (1<<PD4); 
-
-   SPCR = (1 << SPE) | ( 1 << MSTR );    // enable SPI, master, and set clock rate
+   DDRB |= (1<<PB4); // row 8
+   PORTB |= (1<<PB4); 
 }
 
 void drawFrameBuffer() {
      uint8_t i;
      
-     for (i=1;i<=8;i++) {  // for each column in the display      
-        if (i==1) {  // turn the column on
+     for (i=1;i<=8;i++) {
+        
+       SPCR = (1 << SPE) | ( 1 << MSTR );    // enable SPI, master, and set clock rate
+
+        SPDR = fbLights; // set the shift out register
+        while(!(SPSR & (1<<SPIF))); // wait until complete
+
+        SPDR = fbRed[i-1]; 
+        while(!(SPSR & (1<<SPIF))); 
+
+        SPDR = fbGreen[i-1]; 
+        while(!(SPSR & (1<<SPIF))); 
+
+        SPDR = fbBlue[i-1]; 
+        while(!(SPSR & (1<<SPIF))); 
+        SPCR = 0; //turn off spi 
+
+
+        if (i==1) {
             PORTD &= ~(1<<PD2);
         } else if (i==2) {
             PORTD &= ~(1<<PD3);
@@ -77,21 +92,9 @@ void drawFrameBuffer() {
             PORTB &= ~(1<<PB4);
         }
 
-        SPDR = fbLights; // set the shift out register
-        while(!(SPSR & (1<<SPIF))); // wait until complete
-
-        SPDR = fbRed[i-1]; 
-        while(!(SPSR & (1<<SPIF))); 
-
-        SPDR = fbGreen[i-1]; 
-        while(!(SPSR & (1<<SPIF))); 
-
-        SPDR = fbBlue[i-1]; 
-        while(!(SPSR & (1<<SPIF))); 
-
         delay(1);
 
-        if (i==1) {  // turn the column off
+        if (i==1) {
             PORTD |= (1<<PD2);
         } else if (i==2) {
             PORTD |= (1<<PD3);
@@ -115,14 +118,14 @@ void drawFrameBuffer() {
 main() {
    initFrameBuffer();
    fbLights = 0xAAU;
-   fbRed[0] = 0xAAU;
+   fbRed[0] = 0x08U;
    fbGreen[1] = 0xFFU;
    fbBlue[2] = 0x11U;
    fbRed[3] = 0x80U;
    fbRed[4] = 0x40U;
    fbRed[5] = 0x20U;
    fbRed[6] = 0x10U;
-   fbRed[7] = 0x08U;
+   fbRed[7] = 0xAAU;
 
    while (1) {
       drawFrameBuffer();

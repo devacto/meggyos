@@ -76,7 +76,7 @@ void initFrameBuffer() {
    DDRB |= (1<<PB4); // row 8
    PORTB |= (1<<PB4); 
 
-   SPCR = (1 << SPE) | ( 1 << MSTR );    // enable SPI, master, and set clock rate
+   
 }
 
 void drawFrameBuffer() {
@@ -84,6 +84,21 @@ void drawFrameBuffer() {
      
      for (i=1;i<=8;i++) {
         
+        SPCR = (1 << SPE) | ( 1 << MSTR );    // enable SPI, master, and set clock rate
+        SPDR = fbLights; // set the shift out register
+        while(!(SPSR & (1<<SPIF))); // wait until complete
+
+        SPDR = fbRed[i-1]; 
+        while(!(SPSR & (1<<SPIF))); 
+
+        SPDR = fbGreen[i-1]; 
+        while(!(SPSR & (1<<SPIF))); 
+
+        SPDR = fbBlue[i-1]; 
+        while(!(SPSR & (1<<SPIF))); 
+        SPCR = 0;
+
+
         if (i==1) {
             PORTD &= ~(1<<PD2);
         } else if (i==2) {
@@ -101,18 +116,6 @@ void drawFrameBuffer() {
         } else if (i==8) {
             PORTB &= ~(1<<PB4);
         }
-
-        SPDR = fbLights; // set the shift out register
-        while(!(SPSR & (1<<SPIF))); // wait until complete
-
-        SPDR = fbRed[i-1]; 
-        while(!(SPSR & (1<<SPIF))); 
-
-        SPDR = fbGreen[i-1]; 
-        while(!(SPSR & (1<<SPIF))); 
-
-        SPDR = fbBlue[i-1]; 
-        while(!(SPSR & (1<<SPIF))); 
 
         delay(1);
 
