@@ -9,6 +9,7 @@
 //   avr-objcopy -O ihex -R .eeprom scribble.out scribble.hex
 //   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/ttyUSB0 -U flash:w:scribble.hex
 
+//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/tty.usbserial-A501JU54 -U flash:w:scribble.hex
 
 #include <avr/io.h>
 

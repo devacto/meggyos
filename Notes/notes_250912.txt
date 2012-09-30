@@ -1,0 +1,31 @@
+Meeting Minutes
+Tuesday, 25 September 2012
+
+Schedule
+--------
+25-09: This meeting
+02-10: Part 1 finished
+09-10: Part 2 finished 
+16-10: Part 3 finished
+23-10: Part 4 finished
+29-10: Report finished, submit
+
+Part 1: Application Library
+---------------------------
+- draw to the display: John
+- obtain button presses: Claude
+- access the buzzer: Victor
+
+Things to do
+------------
+Part 1: Application Library - Interfacing with Meggy hardware
+Part 2: Multi-threading
+Part 3: Simple game based on (1) and (2)
+Part 4: Extension
+Report: Overview of the design and implementation
+
+Report
+------
+- abstract
+- 0.5 page report for each part
+- appendix containing our code listings
