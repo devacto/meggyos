@@ -7,6 +7,7 @@
 //   avr-objcopy -O ihex -R .eeprom interrupt.out interrupt.hex
 //   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/ttyUSB0 -U flash:w:interrupt.hex
 
+//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/tty.usbserial-A501JU54 -U flash:w:interrupt.hex
 
 #include <avr/io.h>
 #include <avr/interrupt.h>

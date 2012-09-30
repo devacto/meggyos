@@ -7,6 +7,7 @@
 //   avr-objcopy -O ihex -R .eeprom screen.out screen.hex
 //   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/ttyUSB0 -U flash:w:screen.hex
 
+//   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/tty.usbserial-A501JU54 -U flash:w:screen.hex
 
 #include <avr/io.h>
 
