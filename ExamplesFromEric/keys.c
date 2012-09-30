@@ -40,9 +40,9 @@ main() {
 
 
    while (1) {
-       SPDR = (~(PINC) & 0x3FU); // read pins on port c and set the shift out register
+       SPDR = (~(PINC));// & 0x3FU); // read pins on port c and set the shift out register
        while(!(SPSR & (1<<SPIF))); // wait until complete
-
+/*
        SPDR = dataRed; 
        while(!(SPSR & (1<<SPIF))); 
 
@@ -52,6 +52,7 @@ main() {
        SPDR = dataBlue; 
        while(!(SPSR & (1<<SPIF))); 
 
+       */
        delay(1);
     }
 } 

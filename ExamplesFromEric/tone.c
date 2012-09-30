@@ -27,8 +27,8 @@ main() {
    DDRB |= 1<<PB1;   // set pin 15 to output
    while (1) {
        PORTB |= 1<<PB1;   // set pin 15 high
-       delay(2);
+       delay(8);
        PORTB &= ~(1<<PB1);   // set pin 15 low
-       delay(2);
+       delay(8);
    }  
 } 
