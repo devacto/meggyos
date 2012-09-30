@@ -27,6 +27,14 @@ AVR working suit on Mac OS X
 * AVR DUDE ?
     sudo port install avrdude
 
+Compiling
+=========
+Use the script under / to compile the project. Say if you want get tone.c
+compiled and upload it to the Meggy. Use the command below(_Make sure Meggy is
+        on_):
+<pre>sh compile.sh tone</pre>
+Then you could enjoy her screaming:)
+
 AVRDUDE for Mac OS X
 ====================
 
