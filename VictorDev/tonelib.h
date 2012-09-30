@@ -108,5 +108,5 @@ Tone duration is then generally managed in software. There is no provision for c
 #define ToneD9          851
 #define ToneDs9         803
 
-extern void PlayTone();
-extern void delay(uint16_t ms);
+extern void PlayTone(uint16_t tone, uint16_t duration);
+extern void delay(uint16_t ms, uint16_t divisor);

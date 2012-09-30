@@ -5,5 +5,5 @@
 #include "tonelib.h"
 
 main() {
-	PlayTone();
+	PlayTone(ToneC7, 1000);
 }

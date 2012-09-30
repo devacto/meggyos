@@ -10,6 +10,7 @@
 //    minicom -b 9600 -D /dev/ttyUSB0
 
 //   avrdude -b57600 -patmega328p -cstk500v1 -P/dev/tty.usbserial-A501JU54 -U flash:w:serialout.hex
+//   minicom -b 9600 -D /dev/tty.usbserial-A501JU54
 
 
 #include <avr/io.h>
