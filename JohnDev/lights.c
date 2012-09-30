@@ -42,6 +42,7 @@ main() {
        SPDR = dataLights; // set the shift out register
        while(!(SPSR & (1<<SPIF))); // wait until complete
 
+       while(!(SPSR & (1<<SPIF))); 
 
        delay(1000);
        dataLights = (dataLights << 1) | (dataLights >> 7);

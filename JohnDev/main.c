@@ -20,21 +20,16 @@ int main()
     fbRed[5] = 0x20U;
     fbRed[6] = 0x10U;
     fbRed[7] = 0xAAU;
-    while (0)
-    {
-        drawFrameBuffer(1, 0x11);
-        fbLights =  (fbLights << 1) | (fbLights >> 7);
 
-    }
-   // while(1)
+    while(1)
     {
-        drawFrameBufferOld();
-//        turnOffFramBuffer();
-        fbLights =  (fbLights << 1) | (fbLights >> 7);
-        for (i =0; i < 8 ; i++)
-        {
-            fbRed[i] = (fbRed[i] << 1) | (fbRed[i] >> 7);
+        drawFrameBuffer();
+        i++;
+        if (i >= 1000)
+        {        
+            fbLights =  (fbLights << 1) | (fbLights >> 7);
+            for (i =0; i < 8 ; i++)
+                fbRed[i] = (fbRed[i] << 1) | (fbRed[i] >> 7);
         }
-        delay(100);
     }
 }
