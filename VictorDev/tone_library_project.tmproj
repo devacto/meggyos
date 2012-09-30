@@ -14,27 +14,15 @@
 		</dict>
 		<dict>
 			<key>filename</key>
-			<string>high_tone.c</string>
-			<key>lastUsed</key>
-			<date>2012-09-28T07:54:18Z</date>
-		</dict>
-		<dict>
-			<key>filename</key>
-			<string>compile_high_tone.sh</string>
-			<key>lastUsed</key>
-			<date>2012-09-28T07:51:35Z</date>
-		</dict>
-		<dict>
-			<key>filename</key>
 			<string>main.c</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T08:00:41Z</date>
+			<date>2012-09-30T01:30:08Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>tonelib.c</string>
 			<key>lastUsed</key>
-			<date>2012-09-28T07:54:20Z</date>
+			<date>2012-09-30T01:30:08Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -42,27 +30,13 @@
 			<key>filename</key>
 			<string>tonelib.h</string>
 			<key>lastUsed</key>
-			<date>2012-09-28T07:54:20Z</date>
+			<date>2012-09-30T01:21:43Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
-		<key>compile_high_tone.sh</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>6</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>compile_main.sh</key>
 		<dict>
 			<key>caret</key>
@@ -93,26 +67,12 @@
 				<integer>8</integer>
 			</dict>
 		</dict>
-		<key>high_tone.c</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>main.c</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>1</integer>
+				<integer>22</integer>
 				<key>line</key>
 				<integer>7</integer>
 			</dict>
@@ -126,9 +86,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>9</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>11</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -140,21 +100,19 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>28</integer>
+				<integer>53</integer>
 				<key>line</key>
-				<integer>100</integer>
+				<integer>110</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>66</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>high_tone.c</string>
 		<string>compile_main.sh</string>
-		<string>compile_high_tone.sh</string>
 		<string>tonelib.h</string>
 		<string>tonelib.c</string>
 		<string>main.c</string>
@@ -162,6 +120,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{822, 4}, {618, 874}}</string>
+	<string>{{2, 4}, {745, 874}}</string>
 </dict>
 </plist>
