@@ -7,7 +7,7 @@
 void PlayTone(uint16_t tone, uint16_t duration) {
 	DDRB |= 1<<PB1;
 	
-	uint16_t i = 0;
+	uint16_t i;
 	
 	for (i=0; i<duration; i++) {
 		PORTB |= 1<<PB1;
