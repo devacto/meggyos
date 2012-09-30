@@ -3,28 +3,26 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>compile_main.sh</string>
+	<string>tonelib.c</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>compile_main.sh</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T08:00:42Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2012-09-28T07:52:01Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>high_tone.c</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T08:00:06Z</date>
+			<date>2012-09-28T07:54:18Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>compile_high_tone.sh</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T07:58:01Z</date>
+			<date>2012-09-28T07:51:35Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -36,13 +34,15 @@
 			<key>filename</key>
 			<string>tonelib.c</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T08:00:42Z</date>
+			<date>2012-09-28T07:54:20Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>tonelib.h</string>
 			<key>lastUsed</key>
-			<date>2012-09-26T07:59:56Z</date>
+			<date>2012-09-28T07:54:20Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
@@ -54,30 +54,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>94</integer>
+				<integer>35</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>6</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>94</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
 		</dict>
 		<key>compile_main.sh</key>
 		<dict>
@@ -86,7 +70,7 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>8</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
@@ -97,16 +81,16 @@
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>89</integer>
+				<integer>68</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>8</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>8</integer>
 			</dict>
 		</dict>
 		<key>high_tone.c</key>
@@ -114,30 +98,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>21</integer>
 				<key>line</key>
-				<integer>10</integer>
+				<integer>8</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>19</integer>
-				<key>line</key>
-				<integer>10</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>10</integer>
-			</dict>
 		</dict>
 		<key>main.c</key>
 		<dict>
@@ -158,9 +126,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>19</integer>
+				<integer>30</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>19</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -172,30 +140,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>7</integer>
+				<integer>28</integer>
 				<key>line</key>
-				<integer>110</integer>
+				<integer>100</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>62</integer>
-				<key>line</key>
-				<integer>110</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>7</integer>
-				<key>line</key>
-				<integer>110</integer>
-			</dict>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -210,6 +162,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<false/>
 	<key>windowFrame</key>
-	<string>{{882, 4}, {557, 874}}</string>
+	<string>{{822, 4}, {618, 874}}</string>
 </dict>
 </plist>
