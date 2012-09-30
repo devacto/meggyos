@@ -29,7 +29,7 @@ AVR working suit on Mac OS X
 
 Compiling
 =========
-Use the script under / to compile the project. Say if you want get tone.c
+Use the script under / to compile the project. Say you want to get tone.c
 compiled and upload it to the Meggy. Use the command below(_Make sure Meggy is
         on_):
 <pre>sh compile.sh tone</pre>
