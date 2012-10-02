@@ -15,6 +15,5 @@ void delay(uint16_t ms);
 
 void turnOnFrameBuffer();
 
-void drawFrameBuffer(uint8_t ledRow, uint8_t lightsFlag);
+void drawFrameBuffer();
 
-void drawFrameBufferOld();
