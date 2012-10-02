@@ -7,7 +7,7 @@ extern uint8_t fbGreen[];
 extern uint8_t fbBlue[];
 extern uint8_t fbLights;
 
-uint16_t i=0;
+uint16_t i=0,j=0,k=0;
 
 main()
 {
@@ -16,7 +16,7 @@ main()
     turnOnFrameBuffer();
     fbLights = 0xAAU;
     fbRed[0] = 0x08U;
-    fbGreen[1] = 0xFFU;
+    fbGreen[1] = 0xAAU;
     fbBlue[2] = 0x11U;
     fbRed[3] = 0x80U;
     fbRed[4] = 0x40U;
@@ -31,9 +31,16 @@ main()
     OCR2A  = (F_CPU >> 3) / 8 / 15 / 120; 
     TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
 
-    TCCR0 |= (1<<CS02) | (1<<CS00);
-    TIMSK |= (1<<TOIE0);
-    TCNT0= 0;
+    TCCR1A = (1<<WGM21); // clear timer on compare match
+    TCCR1B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
+    OCR1A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    TIMSK1 = (1<<OCIE1A); // call interrupt on output compare match
+    
+    
+    TCCR0A = (1<<WGM21); // clear timer on compare match
+    TCCR0B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
+    OCR0A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    TIMSK0 = (1<<OCIE0A); // call interrupt on output compare match
     
     sei( );    // Enable interrupts
 
@@ -44,18 +51,31 @@ main()
     }
 }
 
-ISR(TIMER0_OVF_vect)
-{
-    static uint16_t j=0;
 
+ISR(TIMER0_COMPA_vect)
+{
+    sei();
+    k++;
+    if(k>100)
+        fbGreen[1] = (fbGreen[1] << 1) | (fbGreen[1] >> 7);
+
+}
+
+
+
+ISR(TIMER1_COMPA_vect)
+{
+    sei();
     j++;
     if(j>100)
         fbBlue[2] = (fbBlue[2] << 1) | (fbBlue[2] >> 7);
 
 }
 
+
 ISR(TIMER2_COMPA_vect)
 {
+    sei();
     i++;
     if (i>2000)
     {
@@ -67,4 +87,6 @@ ISR(TIMER2_COMPA_vect)
     }
     
 }
+
+
 
