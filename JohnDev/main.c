@@ -26,12 +26,16 @@ main()
     
     DDRB |= 1<<PB1;   // set pin 15 to output
    
-   TCCR2A = (1<<WGM21); // clear timer on compare match
-   TCCR2B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
-   OCR2A  = (F_CPU >> 3) / 8 / 15 / 120; 
-   TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
+    TCCR2A = (1<<WGM21); // clear timer on compare match
+    TCCR2B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
+    OCR2A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
 
-   sei( );    // Enable interrupts
+    TCCR0 |= (1<<CS02) | (1<<CS00);
+    TIMSK |= (1<<TOIE0);
+    TCNT0= 0;
+    
+    sei( );    // Enable interrupts
 
     while(1)
     {
@@ -40,6 +44,15 @@ main()
     }
 }
 
+ISR(TIMER0_OVF_vect)
+{
+    static uint16_t j=0;
+
+    j++;
+    if(j>100)
+        fbBlue[2] = (fbBlue[2] << 1) | (fbBlue[2] >> 7);
+
+}
 
 ISR(TIMER2_COMPA_vect)
 {
