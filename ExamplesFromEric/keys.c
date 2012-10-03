@@ -24,10 +24,12 @@ void delay(uint16_t ms) {
 // led driver chip that takes serial input. 
 
 main() {
+    
    uint8_t dataLights = 0x00;
    uint8_t dataRed = 0x00;
    uint8_t dataGreen = 0x00;
    uint8_t dataBlue = 0x00;
+   
 
    DDRB |=  (1<<PB2) | (1<<PB3); // make the serial pins output   
    PORTB |= (1<<PB2);  // set the led drivers to recieve input
@@ -40,7 +42,7 @@ main() {
 
 
    while (1) {
-       SPDR = (~(PINC));// & 0x3FU); // read pins on port c and set the shift out register
+       SPDR = (~(PINC) & 0x3FU); // read pins on port c and set the shift out register
        while(!(SPSR & (1<<SPIF))); // wait until complete
 /*
        SPDR = dataRed; 
