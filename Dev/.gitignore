@@ -1,0 +1,5 @@
+*.tmproj
+*.hex
+*.o
+
+main
