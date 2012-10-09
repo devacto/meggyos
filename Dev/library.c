@@ -182,11 +182,11 @@ void checkButtonsPress()
     uint8_t i = getButtons();
     j = i & ~(lastButtonState);  // What's changed?
 
-    Button_B  = (j & 1);      
-    Button_A = (j & 2);     
-    Button_Up = (j & 4);
-    Button_Down = (j & 8);
-    Button_Left = (j & 16);
+    Button_B     = (j & 1);      
+    Button_A     = (j & 2);     
+    Button_Up    = (j & 4);
+    Button_Down  = (j & 8);
+    Button_Left  = (j & 16);
     Button_Right = (j & 32);
 
     lastButtonState = i;
