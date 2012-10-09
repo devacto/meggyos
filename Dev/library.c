@@ -164,30 +164,30 @@ uint8_t getButtons()
 
 void checkButtonsDown()
 {
- 	 uint8_t i = getButtons(); 
+    uint8_t i = getButtons(); 
 	 
- 	 Button_B  = (i & 1);      
-     Button_A = (i & 2);     
-     Button_Up = (i & 4);
-     Button_Down = (i & 8);
-     Button_Left = (i & 16);
-     Button_Right = (i & 32);
+    Button_B     = (i & 1);      
+    Button_A     = (i & 2);     
+    Button_Up    = (i & 4);
+    Button_Down  = (i & 8);
+    Button_Left  = (i & 16);
+    Button_Right = (i & 32);
 	 
 	 lastButtonState = i; 
 }
 
 void checkButtonsPress()
 {
-	 uint8_t j;
-	 uint8_t i = getButtons();
-	 j = i & ~(lastButtonState);  // What's changed?
-	 
- 	 Button_B  = (j & 1);      
-     Button_A = (j & 2);     
-     Button_Up = (j & 4);
-     Button_Down = (j & 8);
-     Button_Left = (j & 16);
-     Button_Right = (j & 32);
-	 
-	 lastButtonState = i;
+    uint8_t j;
+    uint8_t i = getButtons();
+    j = i & ~(lastButtonState);  // What's changed?
+
+    Button_B  = (j & 1);      
+    Button_A = (j & 2);     
+    Button_Up = (j & 4);
+    Button_Down = (j & 8);
+    Button_Left = (j & 16);
+    Button_Right = (j & 32);
+
+    lastButtonState = i;
 }
