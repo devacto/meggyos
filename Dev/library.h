@@ -8,6 +8,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
+#define BAUD 9600
 #include <util/setbaud.h>
 
 // This is a combined library for Meggy Jr
@@ -142,8 +143,6 @@ void uart_init();
 void uart_putchar(char c);
 
 // This is for the serial out stuff
-
-#define BAUD 9600
 
 void    checkButtonsDown();
 void    checkButtonsPress();

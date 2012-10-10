@@ -8,7 +8,7 @@
 
 main() {
 	uart_init();
-	uart_putchar('h');
+	uart_putchar('h'); // Serial out stuff
 
    while (1) {
        checkButtonsPress( );
