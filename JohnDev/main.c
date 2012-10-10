@@ -164,6 +164,3 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
 
     reti();
 }
-
-
-

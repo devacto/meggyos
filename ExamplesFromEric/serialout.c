@@ -19,7 +19,7 @@
 
 #include <util/setbaud.h>
   
-void uart_init(void) {
+void uart_init() {
     UBRR0H = UBRRH_VALUE;
     UBRR0L = UBRRL_VALUE;
 
@@ -36,12 +36,11 @@ void uart_putchar(char c) {
 
 
 main() {
-   uart_init();
+ 	char c = 48;
+
+	uart_init();
+
    while(1) {
-      uart_putchar('h');
-      uart_putchar('e');
-      uart_putchar('l');
-      uart_putchar('l');
-      uart_putchar('o');
+      uart_putchar(c);
    }
 } 

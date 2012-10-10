@@ -13,7 +13,7 @@ extern uint8_t fbGreen[];
 extern uint8_t fbBlue[];
 extern uint8_t fbLights;
 
-void PlayTone(uint16_t tone, uint16_t duration) {
+void playTone(uint16_t tone, uint16_t duration) {
 	DDRB |= 1<<PB1;
 	
 	uint16_t i;
@@ -209,3 +209,80 @@ uint8_t getButtons()
 {
     return (~(PINC) & 0x3FU);
 }
+<<<<<<< HEAD
+=======
+
+// Implementation of serial-out methods 
+
+void uart_init() {
+    UBRR0H = UBRRH_VALUE;
+    UBRR0L = UBRRL_VALUE;
+
+    UCSR0A &= ~(_BV(U2X0));
+
+    UCSR0C = _BV(UCSZ01) | _BV(UCSZ00); /* 8-bit data */ 
+    UCSR0B = _BV(RXEN0) | _BV(TXEN0);   /* Enable RX and TX */
+}
+
+void uart_putchar(char c) {
+    loop_until_bit_is_set(UCSR0A, UDRE0); /* Wait until data register empty. */
+    UDR0 = c;
+}
+
+void checkButtonsDown()
+{
+    uint8_t i = getButtons(); 
+	 
+    Button_B     = (i & 1);      
+    Button_A     = (i & 2);     
+    Button_Up    = (i & 4);
+    Button_Down  = (i & 8);
+    Button_Left  = (i & 16);
+    Button_Right = (i & 32);
+	 
+	 lastButtonState = i; 
+}
+
+void checkButtonsPress()
+{
+    uint8_t j;
+    uint8_t i = getButtons();
+    j = i & ~(lastButtonState);  // What's changed?
+
+    Button_B     = (j & 1);      
+    Button_A     = (j & 2);     
+    Button_Up    = (j & 4);
+    Button_Down  = (j & 8);
+    Button_Left  = (j & 16);
+    Button_Right = (j & 32);
+
+    lastButtonState = i;
+}
+
+// Method stubs for TODO
+
+// This is for the initialisation which will be the first line of any Meggy programs
+void meggy_init() {
+	uart_init();
+	initializeButtons();
+}
+
+void clearPixel() {
+	
+}
+
+// this is to draw on the auxiliary LEDs which are on the top of the display screen
+void setAuxLED() {
+	
+}
+
+// this is to put colour in a pixel at position (x,y,color)
+void drawPx(){
+	
+}
+
+// this is to read the colour at position (x,y)
+int readPx(){
+	return 0;
+} 
+>>>>>>> 05681f6adcbe7090b891988013808d7b1849e0e5

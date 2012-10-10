@@ -7,9 +7,38 @@
 #include "library.h"
 
 main() {
-	PlayTone(ToneC3, 1000); // 1000 is 2 seconds
-	PlayTone(ToneD3, 1000);
-	PlayTone(ToneE3, 1000);
-	PlayTone(ToneF3, 1000);
-	PlayTone(ToneG3, 1000);
+	meggy_init();
+	 // Serial out stuff
+   while (1) {
+       checkButtonsDown( );
+       if (Button_B) {
+         	playTone(ToneC3, 50);
+				uart_putchar('b');
+       } 
+
+		if (Button_A) {
+			playTone(ToneD3, 50);
+			uart_putchar('a');
+		 } 
+		
+		if (Button_Up) {
+			playTone(ToneE3, 50);
+			uart_putchar('u');
+		 }
+		
+		if (Button_Down) {
+			playTone(ToneF3, 50);
+			uart_putchar('d');
+		}
+		
+		if (Button_Left) {
+			playTone(ToneG3, 50);
+			uart_putchar('l');
+		} 
+		
+		if (Button_Right) {
+			playTone(ToneA3, 50);
+			uart_putchar('r');
+		}
+   }
 }

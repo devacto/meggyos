@@ -8,6 +8,9 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
+#define BAUD 9600
+#include <util/setbaud.h>
+
 // This is a combined library for Meggy Jr
 // - includes APIs which handle button presses,
 // - tone producing
@@ -154,7 +157,7 @@ enum color_index {
 
 // This is for the tone methods
 
-void PlayTone(uint16_t tone, uint16_t duration);
+void playTone(uint16_t tone, uint16_t duration);
 void tone_delay(uint16_t ms, uint16_t divisor);
 
 // This is for the screen drawing stuff
@@ -173,15 +176,34 @@ void drawPixel(uint8_t row, uint8_t col, enum color_index color);
 
 // This is for the button stuff
 
-#define BUTTONB     0x01U
-#define BUTTONA     0x02U
-#define BUTTONUP    0x04U
-#define BUTTONDOWN  0x08U
-#define BUTTONLEFT  0x10U
-#define BUTTONRIGHT 0x20U
+uint8_t Button_A;		 
+uint8_t Button_B;
+uint8_t Button_Up;
+uint8_t Button_Down;
+uint8_t Button_Left;
+uint8_t Button_Right;
+uint8_t lastButtonState;
 
 // This is for the button methods
 
-void initializeButtons();
+void    initializeButtons();
 uint8_t getButtons();
+<<<<<<< HEAD
 void delay(uint16_t ms);
+=======
+
+void 	  uart_init();
+void uart_putchar(char c);
+
+// This is for the serial out stuff
+
+void    checkButtonsDown();
+void    checkButtonsPress();
+
+// TODO methods to implement
+void meggy_init(); // this is for the initialisation which will be the first line of any Meggy programs
+void clearPixel();
+void setAuxLED(); // this is to draw on the auxiliary LEDs which are on the top of the display screen
+void drawPx(); // this is to put colour in a pixel at position (x,y,color)
+int readPx(); // this is to read the colour at position (x,y)
+>>>>>>> 05681f6adcbe7090b891988013808d7b1849e0e5
