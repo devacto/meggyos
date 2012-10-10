@@ -9,4 +9,11 @@
 main() {
 	uart_init();
 	uart_putchar('h');
+
+   while (1) {
+       checkButtonsPress( );
+       if (Button_B) {
+            PlayTone(ToneC3, 10);
+       }
+   }
 }

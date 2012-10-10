@@ -125,21 +125,25 @@ void drawFrameBuffer();
 
 // This is for the button stuff
 
-#define BUTTONB     0x01U
-#define BUTTONA     0x02U
-#define BUTTONUP    0x04U
-#define BUTTONDOWN  0x08U
-#define BUTTONLEFT  0x10U
-#define BUTTONRIGHT 0x20U
+uint8_t Button_A;		 
+uint8_t Button_B;
+uint8_t Button_Up;
+uint8_t Button_Down;
+uint8_t Button_Left;
+uint8_t Button_Right;
+uint8_t lastButtonState;
 
 // This is for the button methods
 
-void initializeButtons();
+void    initializeButtons();
 uint8_t getButtons();
-void delay(uint16_t ms);
+
 void uart_init();
 void uart_putchar(char c);
 
 // This is for the serial out stuff
 
 #define BAUD 9600
+
+void    checkButtonsDown();
+void    checkButtonsPress();
