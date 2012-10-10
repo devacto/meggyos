@@ -8,6 +8,8 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
+#include <util/setbaud.h>
+
 // This is a combined library for Meggy Jr
 // - includes APIs which handle button presses,
 // - tone producing
@@ -135,3 +137,9 @@ void drawFrameBuffer();
 void initializeButtons();
 uint8_t getButtons();
 void delay(uint16_t ms);
+void uart_init();
+void uart_putchar(char c);
+
+// This is for the serial out stuff
+
+#define BAUD 9600
