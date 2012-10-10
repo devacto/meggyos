@@ -15,4 +15,5 @@ void PlayTone(uint16_t tone, uint16_t duration) {
 		PORTB &= ~(1<<PB1);
 		delay(2, tone);
 	}
+    DDRB &= ~(1<<PB1);
 }

@@ -14,7 +14,7 @@ void initializeButtons( )
 
 uint8_t getButtons( )
 {
-    return (~(PINC) & 0x3FU);
+    return (~(PINC));// & 0x3FU);
 }
 
 void delay(uint16_t ms) 

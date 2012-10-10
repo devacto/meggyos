@@ -12,12 +12,12 @@ uint16_t i=0,j=0,k=0;
 
 main()
 {
-    
-
     turnOnFrameBuffer();
     fbLights = 0xAAU;
     fbRed[0] = 0x08U;
-    fbGreen[1] = 0xAAU;
+    fbGreen[1] = 0xCCU;
+    fbRed[1] = 0xF0U;
+    fbBlue[1] = 0xAAU;
     fbBlue[2] = 0x11U;
     fbRed[3] = 0x80U;
     fbRed[4] = 0x40U;
@@ -43,7 +43,7 @@ main()
     OCR0A  = (F_CPU >> 3) / 8 / 15 / 120; 
     TIMSK0 = (1<<OCIE0A); // call interrupt on output compare match
     
-    sei( );    // Enable interrupts
+    //sei( );    // Enable interrupts
 
     while(1)
     {

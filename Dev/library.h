@@ -103,6 +103,55 @@
 #define ToneD9          851
 #define ToneDs9         803
 
+uint8_t fbRed[8];
+uint8_t fbGreen[8];
+uint8_t fbBlue[8];
+uint8_t fbLights;
+
+
+enum color_index {
+    whiteIndex,
+    yellowIndex,
+    magentaIndex,
+    redIndex,
+    iceIndex,
+    greenIndex,
+    blueIndex,
+    blackIndex
+}
+
+#define whiteR 1
+#define whiteG 1
+#define whiteB 1
+
+#define yellowR 1
+#define yellowG 1
+#define yellowB 0
+
+#define magentaR 1
+#define magentaG 0
+#define magentaB 1
+
+#define RedR 1 
+#define RedG 0
+#define RedB 0
+
+#define iceR 0
+#define iceG 1
+#define iceB 1
+
+#define greed 0
+#define greed 1
+#define greed 0
+
+#define blueR 0 
+#define blueG 0
+#define blueB 1
+
+#define blackR 0
+#define blackG 0
+#define blackB 0
+
 // This is for the tone methods
 
 void PlayTone(uint16_t tone, uint16_t duration);
@@ -120,6 +169,7 @@ uint8_t fbLights;
 void delay(uint16_t ms);
 void turnOnFrameBuffer();
 void drawFrameBuffer();
+void drawPixel(uint8_t row, uint8_t col, enum color_index color);
 
 // This is for the button stuff
 

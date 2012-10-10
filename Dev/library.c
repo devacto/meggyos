@@ -45,7 +45,8 @@ void delay(uint16_t ms) {
 
 // Below are methods for screen drawing
 
-void turnOnFrameBuffer() {
+void turnOnFrameBuffer() 
+{
    DDRB |=  (1<<PB2) | (1<<PB3); // make the serial pins output   
    PORTB |= (1<<PB2);  // set the led drivers to recieve input
  
@@ -143,6 +144,53 @@ void drawFrameBuffer() {
      }
 }
 
+
+void drawPixel(uint8_t row, uint8_t col, enum color_index colour)
+{
+    switch ( color )
+    {
+        case whiteIndex:
+            fbRed[col] |= whiteR << row;
+            fbGreen[col] |= whiteG << row;
+            fbBlue[col] |= whiteB << row;
+            break;
+        case yellowIndex:
+            fbRed[col] |= yellowR << row;
+            fbGreen[col] |= yellowG << row;
+            fbBlue[col] &= ~((~yellowB) << row);
+            break;
+        case magentaIndex:
+            fbRed[col] |= magentaR << row;
+            fbGreen[col] &= ~((~magentaG) << row);
+            fbBlue[col] |= magentaB << row;
+            break;
+        case redIndex:
+            fbRed[col] |= redR << row;
+            fbGreen[col] &= ~((~redG) << row);
+            fbBlue[col] &= ~((~redB) << row);
+            break;
+        case iceIndex:
+            fbRed[col] &= ~((~iceR) << row);
+            fbGreen[col] |= iceG << row;
+            fbBlue[col] |= iceB << row;
+            break;
+        case greenIndex:
+            fbRed[col] &= ~((~greenR) << row);
+            fbGreen[col] |= greenG << row;
+            fbBlue[col] &= ~((~greenB) << row);
+            break;
+        case blueIndex:
+            fbRed[col] &= ~((~blueR) << row);
+            fbGreen[col] &= ~((~blueG) << row);
+            fbBlue[col] |= blueB << row;
+            break;
+        case blackIndex:
+            fbRed[col] &= ~((~whiteR) << row);
+            fbGreen[col] &= ~((~whiteG) << row);
+            fbBlue[col] &= ~((~whiteB) << row);
+            break;
+    }
+}
 // Implementation of the button methods
 
 void initializeButtons()
