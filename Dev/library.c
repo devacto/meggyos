@@ -147,6 +147,8 @@ void drawFrameBuffer() {
 
 void initializeButtons()
 {
+	// setting some registers
+	
    DDRB |=  (1<<PB2) | (1<<PB3); // make the serial pins output   
    PORTB |= (1<<PB2);  // set the led drivers to recieve input
  
@@ -212,9 +214,10 @@ void checkButtonsPress()
 // Method stubs for TODO
 
 // This is for the initialisation which will be the first line of any Meggy programs
-void meggy_init() {
+void meggyInit() {
 	uart_init();
 	initializeButtons();
+	interruptInit();
 }
 
 void clearPixel() {
@@ -234,4 +237,28 @@ void drawPx(){
 // this is to read the colour at position (x,y)
 int readPx(){
 	return 0;
-} 
+}
+
+// This is for the timer interrupt stuff
+
+void interruptInit() {
+	// Timer interrupt 0
+	TCCR0A = (1<<WGM21); // clear timer on compare match
+    TCCR0B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
+    OCR0A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    TIMSK0 = (1<<OCIE0A); // call interrupt on output compare match
+
+	// Timer interrupt 1
+	TCCR1A = (1<<WGM21); // clear timer on compare match
+    TCCR1B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
+    OCR1A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    TIMSK1 = (1<<OCIE1A); // call interrupt on output compare match
+
+	// Timer interrupt 2
+	TCCR2A = (1<<WGM21); // clear timer on compare match
+    TCCR2B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
+    OCR2A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
+
+	sei();
+}

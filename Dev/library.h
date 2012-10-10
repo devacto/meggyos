@@ -148,8 +148,14 @@ void    checkButtonsDown();
 void    checkButtonsPress();
 
 // TODO methods to implement
-void meggy_init(); // this is for the initialisation which will be the first line of any Meggy programs
+void meggyInit(); // this is for the initialisation which will be the first line of any Meggy programs
 void clearPixel();
 void setAuxLED(); // this is to draw on the auxiliary LEDs which are on the top of the display screen
-void drawPx(); // this is to put colour in a pixel at position (x,y,color)
-int readPx(); // this is to read the colour at position (x,y)
+void drawPixel(); // this is to put colour in a pixel at position (x,y,color)
+int readPixel(); // this is to read the colour at position (x,y)
+
+void interruptInit();
+
+
+
+
