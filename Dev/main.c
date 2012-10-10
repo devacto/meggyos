@@ -7,13 +7,38 @@
 #include "library.h"
 
 main() {
-	uart_init();
-	uart_putchar('h'); // Serial out stuff
-
+	meggy_init();
+	 // Serial out stuff
    while (1) {
-       checkButtonsPress( );
+       checkButtonsDown( );
        if (Button_B) {
-            PlayTone(ToneC3, 10);
-       }
+         	playTone(ToneC3, 50);
+				uart_putchar('b');
+       } 
+
+		if (Button_A) {
+			playTone(ToneD3, 50);
+			uart_putchar('a');
+		 } 
+		
+		if (Button_Up) {
+			playTone(ToneE3, 50);
+			uart_putchar('u');
+		 }
+		
+		if (Button_Down) {
+			playTone(ToneF3, 50);
+			uart_putchar('d');
+		}
+		
+		if (Button_Left) {
+			playTone(ToneG3, 50);
+			uart_putchar('l');
+		} 
+		
+		if (Button_Right) {
+			playTone(ToneA3, 50);
+			uart_putchar('r');
+		}
    }
 }

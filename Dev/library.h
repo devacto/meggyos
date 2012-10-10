@@ -108,7 +108,7 @@
 
 // This is for the tone methods
 
-void PlayTone(uint16_t tone, uint16_t duration);
+void playTone(uint16_t tone, uint16_t duration);
 void tone_delay(uint16_t ms, uint16_t divisor);
 
 // This is for the screen drawing stuff
@@ -139,10 +139,17 @@ uint8_t lastButtonState;
 void    initializeButtons();
 uint8_t getButtons();
 
-void uart_init();
+void 	  uart_init();
 void uart_putchar(char c);
 
 // This is for the serial out stuff
 
 void    checkButtonsDown();
 void    checkButtonsPress();
+
+// TODO methods to implement
+void meggy_init(); // this is for the initialisation which will be the first line of any Meggy programs
+void clearPixel();
+void setAuxLED(); // this is to draw on the auxiliary LEDs which are on the top of the display screen
+void drawPx(); // this is to put colour in a pixel at position (x,y,color)
+int readPx(); // this is to read the colour at position (x,y)

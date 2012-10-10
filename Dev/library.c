@@ -13,7 +13,7 @@ extern uint8_t fbGreen[];
 extern uint8_t fbBlue[];
 extern uint8_t fbLights;
 
-void PlayTone(uint16_t tone, uint16_t duration) {
+void playTone(uint16_t tone, uint16_t duration) {
 	DDRB |= 1<<PB1;
 	
 	uint16_t i;
@@ -208,3 +208,30 @@ void checkButtonsPress()
 
     lastButtonState = i;
 }
+
+// Method stubs for TODO
+
+// This is for the initialisation which will be the first line of any Meggy programs
+void meggy_init() {
+	uart_init();
+	initializeButtons();
+}
+
+void clearPixel() {
+	
+}
+
+// this is to draw on the auxiliary LEDs which are on the top of the display screen
+void setAuxLED() {
+	
+}
+
+// this is to put colour in a pixel at position (x,y,color)
+void drawPx(){
+	
+}
+
+// this is to read the colour at position (x,y)
+int readPx(){
+	return 0;
+} 
