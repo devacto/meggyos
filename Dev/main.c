@@ -6,48 +6,27 @@
 
 #include "library.h"
 
+uint16_t k = 48;
+uint16_t j = 48;
+uint16_t i = 0;
+
 main() {
 	meggyInit();
 	 // Serial out stuff
+	sei();
    while (1) {
-       checkButtonsDown( );
-       if (Button_B) {
-			playTone(ToneC3, 50);
-			uart_putchar('b');
-       } 
-
-		if (Button_A) {
-			playTone(ToneD3, 50);
-			uart_putchar('a');
-		 } 
-		
-		if (Button_Up) {
-			playTone(ToneE3, 50);
-			uart_putchar('u');
-		 }
-		
-		if (Button_Down) {
-			playTone(ToneF3, 50);
-			uart_putchar('d');
-		}
-		
-		if (Button_Left) {
-			playTone(ToneG3, 50);
-			uart_putchar('l');
-		} 
-		
-		if (Button_Right) {
-			playTone(ToneA3, 50);
-			uart_putchar('r');
-		}
+		// the main function should do nothing
    }
 }
+
+
 
 // Interrupt Service Routine (ISR) stuff
 
 // ISR for timer 0
 ISR(TIMER0_COMPA_vect, ISR_NAKED)
 {
+	
     static uint16_t sph, spl;
     asm("push r0");
     asm("push r1");
@@ -62,11 +41,17 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
 	sph = SPH;
     spl = SPL;
     
-    sei();
-    k++;
-    if(k>100)
-        fbGreen[1] = (fbGreen[1] << 1) | (fbGreen[1] >> 7);
+	drawFrameBuffer();
     
+	k++;
+    if (k > 2000) {
+		uart_putchar('0');
+		k = 0;
+        fbGreen[1] = (fbGreen[1] << 1) | (fbGreen[1] >> 7);
+    }
+
+	sei();
+	
     SPH = sph;
     SPL = spl;
     asm("pop r8");
@@ -78,7 +63,8 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     asm("pop r2");
     asm("pop r1");
     asm("pop r0");
-    reti();
+    
+	reti();
 }
 
 
@@ -86,7 +72,8 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
     static uint16_t sph, spl;
-    asm("push r0");
+    
+	asm("push r0");
     asm("push r1");
     asm("push r2");
     asm("push r3");
@@ -97,12 +84,53 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
     asm("push r8");
     sph = SPH;
     spl = SPL;
+	
 
-    sei();
-    j++;
-    if(j>100)
-        fbBlue[2] = (fbBlue[2] << 1) | (fbBlue[2] >> 7);
+	if (Button_B) {
+			playTone(ToneC3, 50);
+			uart_putchar('b');
+			drawPixel(0,0,redIndex);
+       } 
+
+		if (Button_A) {
+			playTone(ToneD3, 50);
+			uart_putchar('a');
+			drawPixel(1,1,greenIndex);
+		 } 
+		
+		if (Button_Up) {
+			playTone(ToneE3, 50);
+			uart_putchar('u');
+			drawPixel(2,2,blueIndex);
+		 }
+		
+		if (Button_Down) {
+			playTone(ToneF3, 50);
+			uart_putchar('d');
+			drawPixel(3,3,iceIndex);
+		}
+		
+		if (Button_Left) {
+			playTone(ToneG3, 50);
+			uart_putchar('l');
+			drawPixel(4,4,magentaIndex);
+		} 
+		
+		if (Button_Right) {
+			playTone(ToneA3, 50);
+			uart_putchar('r');
+			drawPixel(5,5,yellowIndex);
+		}
     
+    j++;
+    if (j > 2000) {
+		uart_putchar(j);
+		j = 48;
+        //fbGreen[1] = (fbGreen[1] << 1) | (fbGreen[1] >> 7);
+    }
+
+	sei();
+	
     SPH = sph;
     SPL = spl;
     asm("pop r8");
@@ -114,6 +142,7 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
     asm("pop r2");
     asm("pop r1");
     asm("pop r0");
+	
     reti();
 }
 
@@ -121,7 +150,8 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
 ISR(TIMER2_COMPA_vect, ISR_NAKED)
 {
     static uint16_t sph, spl;
-    asm("push r0");
+    
+	asm("push r0");
     asm("push r1");
     asm("push r2");
     asm("push r3");
@@ -132,8 +162,9 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
     asm("push r8");
     sph = SPH;
     spl = SPL;
-
-    sei();
+	
+	checkButtonsDown( );
+    
     i++;
     if (i>2000)
     {
@@ -144,6 +175,8 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
         }
     }
 
+	sei();
+	
     SPH = sph;
     SPL = spl;
     asm("pop r8");
@@ -155,6 +188,6 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
     asm("pop r2");
     asm("pop r1");
     asm("pop r0");
-
+	
     reti();
 }

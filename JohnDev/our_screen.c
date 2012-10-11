@@ -14,7 +14,8 @@ extern uint8_t fbLights;
 
 
 
-void delay(uint16_t ms) {
+void delay(uint16_t ms) 
+{
    uint16_t i,j;
    uint16_t loop = F_CPU / 17000;  // this is approximate and needs calabration.
    for (i=0;i<ms;i++) {
@@ -24,7 +25,8 @@ void delay(uint16_t ms) {
 
 
 
-void turnOnFrameBuffer() {
+void turnOnFrameBuffer() 
+{
    DDRB |=  (1<<PB2) | (1<<PB3); // make the serial pins output   
    PORTB |= (1<<PB2);  // set the led drivers to recieve input
  
@@ -124,7 +126,10 @@ void drawFrameBuffer() {
      }
 }
 
-
+int drawPixel(uint8_t row, uint8_t col, uint8_t colour)
+{
+//    if ()
+}
 
 #ifdef USE_MAIN
 int main()
@@ -132,6 +137,8 @@ int main()
     fbLights = 0xAAU;
     fbRed[0] = 0x08U;
     fbGreen[1] = 0xFFU;
+    fbRed[1] = 0x01U;
+    fbBlue[1] = 0x12U;
     fbBlue[2] = 0x11U;
     fbRed[3] = 0x80U;
     fbRed[4] = 0x40U;

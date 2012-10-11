@@ -45,7 +45,9 @@ void delay(uint16_t ms) {
 
 // Below are methods for screen drawing
 
-void turnOnFrameBuffer() {
+void turnOnFrameBuffer() 
+{
+	uint8_t i;
    DDRB |=  (1<<PB2) | (1<<PB3); // make the serial pins output   
    PORTB |= (1<<PB2);  // set the led drivers to recieve input
  
@@ -72,6 +74,13 @@ void turnOnFrameBuffer() {
 
    DDRB |= (1<<PB4); // row 8
    PORTB |= (1<<PB4); 
+
+   for (i=0; i < 8; i++)
+   { 
+      fbRed[i] = 0;
+      fbGreen[i] = 0;
+      fbBlue[i] = 0;
+	}
 }
 
 void drawFrameBuffer() {
@@ -119,7 +128,7 @@ void drawFrameBuffer() {
             PORTB &= ~(1<<PB4);
         }
 
-        delay(1);
+        //delay(1);
 
         // turn off the line, so it won't be disturbed by next data in the buffer
         if (i==1) {
@@ -143,6 +152,53 @@ void drawFrameBuffer() {
      }
 }
 
+
+void drawPixel(uint8_t row, uint8_t col, enum color_index colour)
+{
+    switch ( colour )
+    {
+        case whiteIndex:
+            fbRed[col] |= whiteR << row;
+            fbGreen[col] |= whiteG << row;
+            fbBlue[col] |= whiteB << row;
+            break;
+        case yellowIndex:
+            fbRed[col] |= yellowR << row;
+            fbGreen[col] |= yellowG << row;
+            fbBlue[col] &= ~((~yellowB) << row);
+            break;
+        case magentaIndex:
+            fbRed[col] |= magentaR << row;
+            fbGreen[col] &= ~((~magentaG) << row);
+            fbBlue[col] |= magentaB << row;
+            break;
+        case redIndex:
+            fbRed[col] |= redR << row;
+            fbGreen[col] &= ~((~redG) << row);
+            fbBlue[col] &= ~((~redB) << row);
+            break;
+        case iceIndex:
+            fbRed[col] &= ~((~iceR) << row);
+            fbGreen[col] |= iceG << row;
+            fbBlue[col] |= iceB << row;
+            break;
+        case greenIndex:
+            fbRed[col] &= ~((~greenR) << row);
+            fbGreen[col] |= greenG << row;
+            fbBlue[col] &= ~((~greenB) << row);
+            break;
+        case blueIndex:
+            fbRed[col] &= ~((~blueR) << row);
+            fbGreen[col] &= ~((~blueG) << row);
+            fbBlue[col] |= blueB << row;
+            break;
+        case blackIndex:
+            fbRed[col] &= ~((~whiteR) << row);
+            fbGreen[col] &= ~((~whiteG) << row);
+            fbBlue[col] &= ~((~whiteB) << row);
+            break;
+    }
+}
 // Implementation of the button methods
 
 void initializeButtons()
@@ -218,6 +274,7 @@ void meggyInit() {
 	uart_init();
 	initializeButtons();
 	interruptInit();
+	turnOnFrameBuffer();
 }
 
 void clearPixel() {
@@ -245,20 +302,20 @@ void interruptInit() {
 	// Timer interrupt 0
 	TCCR0A = (1<<WGM21); // clear timer on compare match
     TCCR0B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
-    OCR0A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    OCR0A  = 200; 
     TIMSK0 = (1<<OCIE0A); // call interrupt on output compare match
 
 	// Timer interrupt 1
 	TCCR1A = (1<<WGM21); // clear timer on compare match
     TCCR1B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
-    OCR1A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    OCR1A  = 100; 
     TIMSK1 = (1<<OCIE1A); // call interrupt on output compare match
 
 	// Timer interrupt 2
 	TCCR2A = (1<<WGM21); // clear timer on compare match
     TCCR2B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
-    OCR2A  = (F_CPU >> 3) / 8 / 15 / 120; 
+    OCR2A  = 150; 
     TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
 
-	sei();
-}
+	//sei();
+} 

@@ -106,6 +106,55 @@
 #define ToneD9          851
 #define ToneDs9         803
 
+uint8_t fbRed[8];
+uint8_t fbGreen[8];
+uint8_t fbBlue[8];
+uint8_t fbLights;
+
+
+enum color_index {
+    whiteIndex,
+    yellowIndex,
+    magentaIndex,
+    redIndex,
+    iceIndex,
+    greenIndex,
+    blueIndex,
+    blackIndex
+};
+
+#define whiteR 1
+#define whiteG 1
+#define whiteB 1
+
+#define yellowR 1
+#define yellowG 1
+#define yellowB 0
+
+#define magentaR 1
+#define magentaG 0
+#define magentaB 1
+
+#define redR 1 
+#define redG 0
+#define redB 0
+
+#define iceR 0
+#define iceG 1
+#define iceB 1
+
+#define greenR 0
+#define greenG 1
+#define greenB 0
+
+#define blueR 0 
+#define blueG 0
+#define blueB 1
+
+#define blackR 0
+#define blackG 0
+#define blackB 0
+
 // This is for the tone methods
 
 void playTone(uint16_t tone, uint16_t duration);
@@ -124,6 +173,7 @@ void delay(uint16_t ms);
 void turnOnFrameBuffer();
 void drawFrameBuffer();
 
+
 // This is for the button stuff
 
 uint8_t Button_A;		 
@@ -139,6 +189,9 @@ uint8_t lastButtonState;
 void    initializeButtons();
 uint8_t getButtons();
 
+void delay(uint16_t ms);
+
+
 void 	  uart_init();
 void uart_putchar(char c);
 
@@ -151,11 +204,16 @@ void    checkButtonsPress();
 void meggyInit(); // this is for the initialisation which will be the first line of any Meggy programs
 void clearPixel();
 void setAuxLED(); // this is to draw on the auxiliary LEDs which are on the top of the display screen
-void drawPixel(); // this is to put colour in a pixel at position (x,y,color)
+
+void drawPixel(uint8_t row, uint8_t col, enum color_index color); // this is to put colour in a pixel at position (x,y,color)
 int readPixel(); // this is to read the colour at position (x,y)
 
 void interruptInit();
 
 
 
+
+
+void drawPx(); // this is to put colour in a pixel at position (x,y,color)
+int readPx(); // this is to read the colour at position (x,y)
 
