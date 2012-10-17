@@ -10,21 +10,28 @@ uint16_t k = 48;
 uint16_t j = 48;
 uint16_t i = 0;
 
+
+/*
+ * This var is used to store the Stack Pointer where 
+ * storing the 32 registers data and return address 
+ * of thread i
+ */
 uint16_t sp[2] = {0x0000,0x0000};
 
 
 /*
- *
- * The #i bit of his variable is used as: 
+ * The #i bit of this variable is used as: 
  * #0. a flag used to direct scheduling
  * #1. a flag indicating synchronize query
  * #2. a semaphore for thread 1
  * #3. a semaphore for thread 2
+ * #4. a flag indicating EDF
  */
 #define MTscheduling    0
 #define MTsynchronize   1
 #define MTsemaphore_1   2
 #define MTsemaphore_2   3
+#define MTEDF
 
 uint8_t schedulingFlag = 0;
 
@@ -121,43 +128,59 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
 
     /*
      * Create initial two threads
+     * The stack configuration is :
+     *  #-65 thread 1 return address
+     *  #-64 R0 for thread 1
+     *      ... ...
+     *  #-33 R31 for thread 1           <- sp[0]
+     *  #-32 thread 2 return address
+     *  #-31 R0 for thread 2
+     *      ... ...
+     *  #0   R31 for thread 2           <- sp[1]
      */
 
     if(!sp[0] && !sp[1])
     {
-         asm("pop r31");
-    asm("pop r30");
-    asm("pop r29");
-    asm("pop r28");
-    asm("pop r27");
-    asm("pop r26");
-    asm("pop r25");
-    asm("pop r24");
-    asm("pop r23");
-    asm("pop r22");
-    asm("pop r21");
-    asm("pop r20");
-    asm("pop r19");
-    asm("pop r18");
-    asm("pop r17");
-    asm("pop r16");
-    asm("pop r15");
-    asm("pop r14");
-    asm("pop r13");
-    asm("pop r12");
-    asm("pop r11");
-    asm("pop r10");
-    asm("pop r9");
-    asm("pop r8");
-    asm("pop r7");
-    asm("pop r6");
-    asm("pop r5");
-    asm("pop r4");
-    asm("pop r3");
-    asm("pop r2");
-    asm("pop r1");
-    asm("pop r0");
+        /*
+         * To make two identical threads initially, we restore all
+         * the registers again
+         */
+        asm("pop r31");
+        asm("pop r30");
+        asm("pop r29");
+        asm("pop r28");
+        asm("pop r27");
+        asm("pop r26");
+        asm("pop r25");
+        asm("pop r24");
+        asm("pop r23");
+        asm("pop r22");
+        asm("pop r21");
+        asm("pop r20");
+        asm("pop r19");
+        asm("pop r18");
+        asm("pop r17");
+        asm("pop r16");
+        asm("pop r15");
+        asm("pop r14");
+        asm("pop r13");
+        asm("pop r12");
+        asm("pop r11");
+        asm("pop r10");
+        asm("pop r9");
+        asm("pop r8");
+        asm("pop r7");
+        asm("pop r6");
+        asm("pop r5");
+        asm("pop r4");
+        asm("pop r3");
+        asm("pop r2");
+        asm("pop r1");
+        asm("pop r0");
         
+        /*
+         * Stack configuration for thread 1
+         */
         asm("push r0");
         asm("push r1");
         asm("push r2");
@@ -191,7 +214,9 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("push r30");
         asm("push r31");
 
-
+        /*
+         * Thread configuration for thread 2
+         */
         asm("push r0");
 
         asm("push r0");
@@ -226,21 +251,28 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("push r29");
         asm("push r30");
         asm("push r31");
+
 
         sp[1] = SP;
         sp[0] = SP - 0x21;
+        
+        /*
+         * Fix the initial return address of thread 2
+         */
         SP = SP - 0x41;
         asm("pop r0");
         SP = SP + 0x21;
         asm("push r0");
-        SP = sp[1];
-
     }
 
     /*
-     * Scheduling
+     * Scheduling Part
      */
 
+    /*
+     * To synchronize two threads, we let the advanced thread 
+     * wait slower one
+     */
     if( schedulingFlag & (1 << MTsynchronize) )
     {   
         SP = sp[0] - 0x20;
@@ -250,11 +282,15 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("cp r0, r1");
         asm("brlo .L13");
         //if(r0<r1)
-            SP = sp[0];
+        SP = sp[0];
         //else
         asm(".L13:");
-            SP = sp[1];
+        SP = sp[1];
     }
+    /*
+     * Following two condition are used for semaphore 
+     * checking
+     */
     else if( schedulingFlag & (1<< MTsemaphore_1) )
     {
         SP = sp[0];
@@ -264,9 +300,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         SP = sp[1];
     }
     /*
-     * 
-     * Following two condition is used for RR Scheduling
-     *
+     * Following two condition are used for RR Scheduling
      */
     else if( schedulingFlag & (1<<MTscheduling) )
     {
@@ -278,6 +312,24 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         SP = sp[1];
         schedulingFlag |= 1<<MTscheduling;
     }
+    /*
+     * EDF Scheduling
+     */
+    else if( schedulingFlag & (1 << MTEDF) )
+    {   
+        SP = sp[0] - 0x20;
+        asm("pop r0");
+        SP = sp[1] - 0x20;
+        asm("pop r1");
+        asm("cp r0, r1");
+        asm("brlo .L13");
+        //if(r0<r1)
+        SP = sp[1];
+        //else
+        asm(".L13:");
+        SP = sp[0];
+    }
+
 
 
     asm("pop r31");

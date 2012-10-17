@@ -1,5 +1,6 @@
 *.tmproj
 *.hex
 *.o
-
-main
+*.swp
+*.un~
+*.s
