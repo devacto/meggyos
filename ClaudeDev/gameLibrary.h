@@ -10,6 +10,7 @@ typedef enum GAMESTAGE {
     Ongoing
 } Gamestage;
 
+// enum type of the types of fruit, currently only Normal is supported
 typedef enum FRUITTYPE {
     Normal,
     Super
@@ -29,6 +30,7 @@ typedef struct FRUIT {
     Fruittype type;
 } Fruit;
 
+// the element of the body of the snake
 typedef struct BODY {
     int8_t x, y;
 } Body;
@@ -36,11 +38,11 @@ typedef struct BODY {
 // Below is the data structures of objects
 typedef struct SNAKE
 {
-    int8_t     x, y;
-    Directions dir;
-    Body       body[1<<6];
+    int8_t     x, y; // this is the coordinate of the HEAD!!
+    Directions dir; // direction the HEAD is moving towards
+    Body       body[1<<6];// EXCLUDING the head of snake
     uint8_t    length;
-    uint8_t    bodyShown;
+    uint8_t    bodyShown; // the number of elements that has been shown on screen
 } Snake;
 
 void eatFruit(Snake*, Fruit*);

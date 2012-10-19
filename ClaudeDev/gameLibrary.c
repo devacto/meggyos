@@ -7,12 +7,16 @@
 void fruitInit(Fruit* fruit, Snake* snake)
 {
     while (1) {
+        // generate coordinate
         fruit->x = (uint8_t)rand( ) % 8;
         fruit->y = (uint8_t)rand( ) % 8;
+        // if the point is not occupied by THE HEAD of snake, then break
+        // else regenerate it
         if (fruit->x != snake->x || fruit->y != snake->y) {
             break;
         }
     }
+    // in the future there might be a super fruit
     fruit->type = Normal;
 }
 
@@ -35,6 +39,7 @@ void displayWelcomePage(Gamestage* stage, Snake* snake, Fruit* fruit)
 {
     cleanFrameBuffer( );
 
+    // a hi will be displayed
     drawPixel(2, 6, iceIndex);
     drawPixel(3, 6, iceIndex);
     drawPixel(4, 6, iceIndex);
@@ -57,6 +62,8 @@ void displayWelcomePage(Gamestage* stage, Snake* snake, Fruit* fruit)
     checkButtonsPress( );
 
     if (Button_A || Button_B) {
+        // after pressing, the game will start therefore snake and fruit need to
+        // initialized
         *stage = Ongoing;
         snakeInit(snake);
         fruitInit(fruit, snake);
@@ -67,6 +74,7 @@ void displayGameOverPage(Gamestage* stage)
 {
     cleanFrameBuffer( );
 
+    // a cross will show on screen
     drawPixel(0, 0, magentaIndex);
     drawPixel(1, 1, magentaIndex);
     drawPixel(2, 2, magentaIndex);
@@ -107,9 +115,11 @@ void updateSnakeLocation(Snake* snake)
     uint8_t i;
     int8_t tmpX = snake->x, tmpY = snake->y;
     int8_t preX, preY;
-    // decide the direction that snake is moving towards
+
+    // if the game has just be started, then nothing need to be updated
     if (snake->dir == None) return ;
 
+    // decide the direction that snake is moving towards
     switch (snake->dir) {
         case Up:
             snake->y += 1; break;
@@ -127,6 +137,7 @@ void updateSnakeLocation(Snake* snake)
     validateCoordinate(&snake->x);
     validateCoordinate(&snake->y);
     
+    // update the coordinates of each point of the body
     for (i = 0; i < snake->bodyShown; ++i) {
         preX = snake->body[i].x;
         preY = snake->body[i].y;
@@ -159,12 +170,15 @@ void drawFruit(Fruit fruit)
 void eatFruit(Snake* snake, Fruit* fruit)
 {
     uint8_t i;
+    // check if head reaches the same point as the fruit
     if (snake->x == fruit->x && snake->y == fruit->y) {
         snake->body[snake->length].x = snake->body[snake->length - 1].x;
         snake->body[snake->length].y = snake->body[snake->length - 1].y;
         snake->length++;
         fruitInit(fruit, snake);
     } else {
+        // check if the fruit was generated at the same point as any of the
+        // point of the body
         for (i = 0; i < snake->bodyShown; ++i) {
             if (snake->body[i].x == fruit->x && 
                 snake->body[i].y == fruit->y) {
@@ -183,6 +197,7 @@ void checkCollision(Gamestage* stage, Snake snake)
 {
     uint8_t i;
 
+    // compare the coorinate of the head to each element of the body
     for (i = 0; i < snake.bodyShown; ++i) {
         if (snake.x == snake.body[i].x && snake.y == snake.body[i].y) {
             playTone(ToneD7, 5);
