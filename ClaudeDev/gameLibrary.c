@@ -6,9 +6,22 @@
 
 void displayWelcomePage(Gamestage* stage)
 {
-    drawPixel(0, 0, iceIndex);
-    drawPixel(1, 1, iceIndex);
-    drawPixel(2, 2, iceIndex);
+    drawPixel(2, 6, iceIndex);
+    drawPixel(3, 6, iceIndex);
+    drawPixel(4, 6, iceIndex);
+    drawPixel(5, 6, iceIndex);
+    drawPixel(6, 6, iceIndex);
+    drawPixel(2, 3, iceIndex);
+    drawPixel(3, 3, iceIndex);
+    drawPixel(4, 3, iceIndex);
+    drawPixel(5, 3, iceIndex);
+    drawPixel(6, 3, iceIndex);
+    drawPixel(4, 4, iceIndex);
+    drawPixel(4, 5, iceIndex);
+    drawPixel(2, 1, iceIndex);
+    drawPixel(3, 1, iceIndex);
+    drawPixel(4, 1, iceIndex);
+    drawPixel(6, 1, iceIndex);
 
     drawFrameBuffer( );
 
@@ -23,6 +36,9 @@ void displayGameOverPage( )
 {
 
     drawFrameBuffer( );
+    if (Button_A || Button_B) {
+        *stage = Ongoing;
+    }
 }
 
 void checkOutOfBound(int8_t* x)
