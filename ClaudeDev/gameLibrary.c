@@ -64,7 +64,7 @@ void displayGameOverPage(Gamestage* stage)
     }
 }
 
-void checkOutOfBound(int8_t* x)
+void validateCoordinate(int8_t* x)
 {
     if (*x < 0) {
         *x = 7;
@@ -93,8 +93,8 @@ void updateSnakeLocation(Snake* snake)
     }
 
     // check if it moves out of bound
-    checkOutOfBound(&snake->x);
-    checkOutOfBound(&snake->y);
+    validateCoordinate(&snake->x);
+    validateCoordinate(&snake->y);
     
     for (i = 0; i < snake->bodyShown; ++i) {
         preX = snake->body[i].x;

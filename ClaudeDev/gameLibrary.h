@@ -35,7 +35,7 @@ typedef struct SNAKE
 void generateFruit( );
 void displayWelcomePage(Gamestage*);
 void displayGameOverPage( );
-void checkOutOfBound(int8_t*);
+void validateCoordinate(int8_t*);
 void updateSnakeLocation(Snake*);
 void drawSnake(Snake); 
 void checkCollision(Gamestage*, Snake snake);
