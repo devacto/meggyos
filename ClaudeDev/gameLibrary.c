@@ -6,6 +6,8 @@
 
 void displayWelcomePage(Gamestage* stage)
 {
+    cleanFrameBuffer( );
+
     drawPixel(2, 6, iceIndex);
     drawPixel(3, 6, iceIndex);
     drawPixel(4, 6, iceIndex);
@@ -25,19 +27,40 @@ void displayWelcomePage(Gamestage* stage)
 
     drawFrameBuffer( );
 
-    checkButtonsDown( );
+    checkButtonsPress( );
 
     if (Button_A || Button_B) {
         *stage = Ongoing;
     }
 }
 
-void displayGameOverPage( )
+void displayGameOverPage(Gamestage* stage)
 {
+    cleanFrameBuffer( );
+
+    drawPixel(0, 0, magentaIndex);
+    drawPixel(1, 1, magentaIndex);
+    drawPixel(2, 2, magentaIndex);
+    drawPixel(3, 3, magentaIndex);
+    drawPixel(4, 4, magentaIndex);
+    drawPixel(5, 5, magentaIndex);
+    drawPixel(6, 6, magentaIndex);
+    drawPixel(7, 7, magentaIndex);
+    drawPixel(7, 0, magentaIndex);
+    drawPixel(6, 1, magentaIndex);
+    drawPixel(5, 2, magentaIndex);
+    drawPixel(4, 3, magentaIndex);
+    drawPixel(3, 4, magentaIndex);
+    drawPixel(2, 5, magentaIndex);
+    drawPixel(1, 6, magentaIndex);
+    drawPixel(0, 7, magentaIndex);
+    drawPixel(0, 0, magentaIndex);
 
     drawFrameBuffer( );
+
+    checkButtonsPress( );
     if (Button_A || Button_B) {
-        *stage = Ongoing;
+        *stage = Welcome;
     }
 }
 
@@ -77,7 +100,7 @@ void updateSnakeLocation(Snake* snake)
         preX = snake->body[i].x;
         preY = snake->body[i].y;
         snake->body[i].x = tmpX;
-        snake->body[i].x = tmpY;
+        snake->body[i].y = tmpY;
         tmpX = preX;
         tmpY = preY;
     }
@@ -94,3 +117,17 @@ void drawSnake(Snake snake)
         drawPixel(snake.body[i].y, snake.body[i].x, SNAKECOLOR);
     }
 }
+
+void checkCollision(Gamestage* stage, Snake snake)
+{
+    uint8_t i;
+
+    for (i = 0; i < snake.bodyShown; ++i) {
+        if (snake.x == snake.body[i].x && snake.y == snake.body[i].y) {
+            playTone(ToneD7, 5);
+            *stage = Over;
+            break;
+        }
+    }
+}
+

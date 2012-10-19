@@ -56,13 +56,11 @@ void loop(uint16_t* cnt)
         } else if (Button_Right && snake.dir != Left) {
             snake.dir = 4;
         } 
-    
         updateSnakeLocation(&snake);
-        // reset counter
     } else {
-        displayGameOverPage( );
-        gameStage = Welcome;
+        displayGameOverPage(&gameStage);
     }
+    // reset counter
     *cnt = 0;
 }
 
@@ -77,14 +75,21 @@ main() {
     // this counter is used to control the rate of refreshing
     uint16_t cnt = 0;
 
-    snake.length = 0;
+    // for debugging (2 lines)
+    snake.length = 10;
+  //  gameStage = Over;
+
     meggyInit();
     // Serial out stuff
 //    sei();
     while (1) {
-        cnt > 250 ? loop(&cnt) : cnt++;
+        // snake.length * 10 is used to offset the overhead brought by
+        // calculations of the snake body. Since the bigger the body is, the
+        // longer time it takes to compute
+        cnt > 250 - snake.length * 10 ? loop(&cnt) : cnt++;
         if (gameStage == Ongoing) {
             drawGame( );
+            checkCollision(&gameStage, snake);
         }
     }
 }
