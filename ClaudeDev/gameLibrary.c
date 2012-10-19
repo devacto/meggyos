@@ -79,6 +79,8 @@ void updateSnakeLocation(Snake* snake)
     int8_t tmpX = snake->x, tmpY = snake->y;
     int8_t preX, preY;
     // decide the direction that snake is moving towards
+    if (snake->dir == None) return ;
+
     switch (snake->dir) {
         case Up:
             snake->y += 1; break;

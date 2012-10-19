@@ -76,7 +76,7 @@ main() {
     uint16_t cnt = 0;
 
     // for debugging (2 lines)
-    snake.length = 10;
+    snake.length = 8;
   //  gameStage = Over;
 
     meggyInit();
