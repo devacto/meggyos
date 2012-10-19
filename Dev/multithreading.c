@@ -31,7 +31,7 @@ uint16_t sp[2] = {0x0000,0x0000};
 #define MTsynchronize   1
 #define MTsemaphore_1   2
 #define MTsemaphore_2   3
-#define MTEDF
+#define MTEDF           4
 
 uint8_t schedulingFlag = 0;
 
@@ -39,7 +39,7 @@ uint8_t schedulingFlag = 0;
 main() {
     meggyInit();
     // Serial out stuff
-    sei();
+//    sei();
     while (1) {
 
         drawFrameBuffer();
@@ -280,11 +280,11 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         SP = sp[1] - 0x20;
         asm("pop r1");
         asm("cp r0, r1");
-        asm("brlo .L13");
+        asm("brlo .haha");
         //if(r0<r1)
         SP = sp[0];
         //else
-        asm(".L13:");
+        asm(".haha:");
         SP = sp[1];
     }
     /*
@@ -312,25 +312,23 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         SP = sp[1];
         schedulingFlag |= 1<<MTscheduling;
     }
+    else if( schedulingFlag & (1 << MTEDF) ) 
+    {   
     /*
      * EDF Scheduling
      */
-    else if( schedulingFlag & (1 << MTEDF) )
-    {   
         SP = sp[0] - 0x20;
         asm("pop r0");
         SP = sp[1] - 0x20;
         asm("pop r1");
         asm("cp r0, r1");
-        asm("brlo .L13");
+        asm("brlo .hehe");
         //if(r0<r1)
         SP = sp[1];
         //else
-        asm(".L13:");
+        asm(".hehe:");
         SP = sp[0];
     }
-
-
 
     asm("pop r31");
     asm("pop r30");

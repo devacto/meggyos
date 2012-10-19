@@ -302,7 +302,7 @@ void interruptInit() {
 	// Timer interrupt 0
 	TCCR0A = (1<<WGM21); // clear timer on compare match
     TCCR0B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
-    OCR0A  = 200; 
+    OCR0A  = 100; 
     TIMSK0 = (1<<OCIE0A); // call interrupt on output compare match
 
 	// Timer interrupt 1
@@ -314,7 +314,7 @@ void interruptInit() {
 	// Timer interrupt 2
 	TCCR2A = (1<<WGM21); // clear timer on compare match
     TCCR2B = (1<<CS21);  // timer uses main system clock with 1/8 prescale
-    OCR2A  = 150; 
+    OCR2A  = 100; 
     TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
 
 	//sei();

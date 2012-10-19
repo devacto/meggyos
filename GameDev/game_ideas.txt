@@ -1,5 +1,0 @@
-Our Game
-
-- shooting game
-- racing game
-- music game
