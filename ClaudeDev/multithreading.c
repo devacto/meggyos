@@ -37,12 +37,13 @@ uint16_t sp[2] = {0x0000,0x0000};
 uint8_t schedulingFlag = 0;
 
 Snake     snake;
+Fruit     fruit;
 Gamestage gameStage = Welcome;
 
 void loop(uint16_t* cnt)
 {
     if (gameStage == Welcome) {
-        displayWelcomePage(&gameStage);
+        displayWelcomePage(&gameStage, &snake, &fruit);
     } else if (gameStage == Ongoing) {
     
         checkButtonsPress( );
@@ -57,6 +58,7 @@ void loop(uint16_t* cnt)
             snake.dir = 4;
         } 
         updateSnakeLocation(&snake);
+        eatFruit(&snake, &fruit);
     } else {
         displayGameOverPage(&gameStage);
     }
@@ -68,16 +70,13 @@ void drawGame( )
 {
     cleanFrameBuffer( );
     drawSnake(snake);
+    drawFruit(fruit);
     drawFrameBuffer( );
 }
 
 main() {
     // this counter is used to control the rate of refreshing
     uint16_t cnt = 0;
-
-    // for debugging (2 lines)
-    snake.length = 8;
-  //  gameStage = Over;
 
     meggyInit();
     // Serial out stuff
@@ -86,7 +85,7 @@ main() {
         // snake.length * 10 is used to offset the overhead brought by
         // calculations of the snake body. Since the bigger the body is, the
         // longer time it takes to compute
-        cnt > 250 - snake.length * 10 ? loop(&cnt) : cnt++;
+        cnt > 300 - snake.length * 10 ? loop(&cnt) : cnt++;
         if (gameStage == Ongoing) {
             drawGame( );
             checkCollision(&gameStage, snake);

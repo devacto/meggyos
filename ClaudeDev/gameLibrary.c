@@ -4,7 +4,34 @@
 #include "gameLibrary.h"
 #include "meggyLibrary.h"
 
-void displayWelcomePage(Gamestage* stage)
+void fruitInit(Fruit* fruit, Snake* snake)
+{
+    while (1) {
+        fruit->x = (uint8_t)rand( ) % 8;
+        fruit->y = (uint8_t)rand( ) % 8;
+        if (fruit->x != snake->x || fruit->y != snake->y) {
+            break;
+        }
+    }
+    fruit->type = Normal;
+}
+
+void snakeInit(Snake* snake)
+{
+    uint8_t i;
+
+    snake->x = (uint8_t)rand( ) % 8;
+    snake->y = (uint8_t)rand( ) % 8;
+    for (i = 0; i < 2; ++i) {
+        snake->body[i].x = snake->x;
+        snake->body[i].y = snake->y;
+    }
+    snake->bodyShown = 0;
+    snake->length = 2;
+    snake->dir = None;
+}
+
+void displayWelcomePage(Gamestage* stage, Snake* snake, Fruit* fruit)
 {
     cleanFrameBuffer( );
 
@@ -31,6 +58,8 @@ void displayWelcomePage(Gamestage* stage)
 
     if (Button_A || Button_B) {
         *stage = Ongoing;
+        snakeInit(snake);
+        fruitInit(fruit, snake);
     }
 }
 
@@ -120,6 +149,36 @@ void drawSnake(Snake snake)
     }
 }
 
+void drawFruit(Fruit fruit)
+{
+    if (fruit.type == Normal) {
+        drawPixel(fruit.y, fruit.x, NORMALFRUITCOLOR);
+    }
+}
+
+void eatFruit(Snake* snake, Fruit* fruit)
+{
+    uint8_t i;
+    if (snake->x == fruit->x && snake->y == fruit->y) {
+        snake->body[snake->length].x = snake->body[snake->length - 1].x;
+        snake->body[snake->length].y = snake->body[snake->length - 1].y;
+        snake->length++;
+        fruitInit(fruit, snake);
+    } else {
+        for (i = 0; i < snake->bodyShown; ++i) {
+            if (snake->body[i].x == fruit->x && 
+                snake->body[i].y == fruit->y) {
+                snake->body[snake->length].x = snake->body[snake->length - 1].x;
+                snake->body[snake->length].y = snake->body[snake->length - 1].y;
+                snake->bodyShown++;
+                snake->length++;
+                fruitInit(fruit, snake);
+                break;
+            }
+        }
+    }
+}
+
 void checkCollision(Gamestage* stage, Snake snake)
 {
     uint8_t i;
@@ -132,4 +191,3 @@ void checkCollision(Gamestage* stage, Snake snake)
         }
     }
 }
-

@@ -2,12 +2,18 @@
 #include <avr/io.h>
 
 #define SNAKECOLOR greenIndex
+#define NORMALFRUITCOLOR iceIndex
 
 typedef enum GAMESTAGE {
     Welcome,
     Over,
     Ongoing
 } Gamestage;
+
+typedef enum FRUITTYPE {
+    Normal,
+    Super
+} Fruittype;
 
 // enum type of the diretions that snake is moving towards
 typedef enum DIRECTIONS {
@@ -17,6 +23,11 @@ typedef enum DIRECTIONS {
     Left, 
     Right
 } Directions;
+
+typedef struct FRUIT {
+    uint8_t x, y;
+    Fruittype type;
+} Fruit;
 
 typedef struct BODY {
     int8_t x, y;
@@ -32,10 +43,12 @@ typedef struct SNAKE
     uint8_t    bodyShown;
 } Snake;
 
-void generateFruit( );
-void displayWelcomePage(Gamestage*);
+void eatFruit(Snake*, Fruit*);
+void fruitInit(Fruit*, Snake*);
+void snakeInit(Snake*);
+void displayWelcomePage(Gamestage*, Snake*, Fruit*);
 void displayGameOverPage( );
 void validateCoordinate(int8_t*);
 void updateSnakeLocation(Snake*);
 void drawSnake(Snake); 
-void checkCollision(Gamestage*, Snake snake);
+void checkCollision(Gamestage*, Snake);
