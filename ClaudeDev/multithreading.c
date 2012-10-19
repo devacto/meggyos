@@ -36,24 +36,33 @@ uint16_t sp[2] = {0x0000,0x0000};
 
 uint8_t schedulingFlag = 0;
 
-Snake snake;
+Snake     snake;
+Gamestage gameStage = Welcome;
 
 void loop(uint16_t* cnt)
 {
-    checkButtonsPress( );
-
-    if (Button_Up && snake.dir != Down) {
-        snake.dir = 1;
-    } else if (Button_Down && snake.dir != Up) {
-        snake.dir = 2;
-    } else if (Button_Left && snake.dir != Right) {
-        snake.dir = 3;
-    } else if (Button_Right && snake.dir != Left) {
-        snake.dir = 4;
-    } 
-
-    updateSnakeLocation(&snake);
-    // reset counter
+    if (gameStage == Welcome) {
+        displayWelcomePage(&gameStage);
+    } else if (gameStage == Ongoing) {
+    
+        checkButtonsPress( );
+    
+        if (Button_Up && snake.dir != Down) {
+            snake.dir = 1;
+        } else if (Button_Down && snake.dir != Up) {
+            snake.dir = 2;
+        } else if (Button_Left && snake.dir != Right) {
+            snake.dir = 3;
+        } else if (Button_Right && snake.dir != Left) {
+            snake.dir = 4;
+        } 
+    
+        updateSnakeLocation(&snake);
+        // reset counter
+    } else {
+        displayGameOverPage( );
+        gameStage = Welcome;
+    }
     *cnt = 0;
 }
 
@@ -68,13 +77,15 @@ main() {
     // this counter is used to control the rate of refreshing
     uint16_t cnt = 0;
 
-    snake.length = 1;
+    snake.length = 0;
     meggyInit();
     // Serial out stuff
 //    sei();
     while (1) {
-        cnt > 350 ? loop(&cnt) : cnt++;
-        draw( );
+        cnt > 250 ? loop(&cnt) : cnt++;
+        if (gameStage == Ongoing) {
+            draw( );
+        }
     }
 }
 

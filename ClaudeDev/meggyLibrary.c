@@ -87,7 +87,9 @@ void cleanFrameBuffer() {
     uint8_t i;
 
     for (i = 0; i < 8; ++i) {
-        fbRed[i] = fbGreen[i] = fbBlue[i] = 0;
+        fbRed[i] &= 0; 
+        fbGreen[i] &= 0;
+        fbBlue[i] &= 0;
     }
 }
 

@@ -4,6 +4,25 @@
 #include "gameLibrary.h"
 #include "meggyLibrary.h"
 
+void displayWelcomePage(Gamestage* stage)
+{
+    drawPixel(0, 0, iceIndex);
+    drawPixel(1, 1, iceIndex);
+    drawPixel(2, 2, iceIndex);
+
+    drawFrameBuffer( );
+
+    checkButtonsDown( );
+
+    if (Button_A || Button_B) {
+        *stage = Ongoing;
+    }
+}
+
+void displayGameOverPage( )
+{
+}
+
 void checkOutOfBound(int8_t* x)
 {
     if (*x < 0) {

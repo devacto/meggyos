@@ -3,6 +3,12 @@
 
 #define SNAKECOLOR greenIndex
 
+typedef enum GAMESTAGE {
+    Welcome,
+    Over,
+    Ongoing
+} Gamestage;
+
 // enum type of the diretions that snake is moving towards
 typedef enum DIRECTIONS {
     None, 
@@ -26,6 +32,8 @@ typedef struct SNAKE
     uint8_t    bodyShown;
 } Snake;
 
+void displayWelcomePage(Gamestage*);
+void displayGameOverPage( );
 void checkOutOfBound(int8_t*);
 void updateSnakeLocation(Snake*);
 void drawSnake(Snake); 
