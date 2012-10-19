@@ -21,6 +21,8 @@ void displayWelcomePage(Gamestage* stage)
 
 void displayGameOverPage( )
 {
+
+    drawFrameBuffer( );
 }
 
 void checkOutOfBound(int8_t* x)

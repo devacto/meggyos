@@ -66,7 +66,7 @@ void loop(uint16_t* cnt)
     *cnt = 0;
 }
 
-void draw( )
+void drawGame( )
 {
     cleanFrameBuffer( );
     drawSnake(snake);
@@ -84,7 +84,7 @@ main() {
     while (1) {
         cnt > 250 ? loop(&cnt) : cnt++;
         if (gameStage == Ongoing) {
-            draw( );
+            drawGame( );
         }
     }
 }
