@@ -4,7 +4,8 @@
 // Victor Wibisono
 // modified from code by Eric McCreath, 2012
 
-#include "library.h"
+#include "meggyLibrary.h"
+#include "gameLibrary.h"
 
 uint16_t k = 48;
 uint16_t j = 48;
@@ -35,63 +36,70 @@ uint16_t sp[2] = {0x0000,0x0000};
 
 uint8_t schedulingFlag = 0;
 
+Snake     snake;
+Fruit     fruit;
+Gamestage gameStage = Welcome;
+
+void loop(uint16_t* cnt)
+{
+    if (gameStage == Welcome) {
+        displayWelcomePage(&gameStage, &snake, &fruit);
+    } else if (gameStage == Ongoing) {
+    
+        checkButtonsPress( );
+    
+        if (Button_Up && snake.dir != Down) {
+            snake.dir = 1;
+        } else if (Button_Down && snake.dir != Up) {
+            snake.dir = 2;
+        } else if (Button_Left && snake.dir != Right) {
+            snake.dir = 3;
+        } else if (Button_Right && snake.dir != Left) {
+            snake.dir = 4;
+        } 
+        updateSnakeLocation(&snake);
+        eatFruit(&snake, &fruit);
+    } else {
+        displayGameOverPage(&gameStage);
+    }
+    // reset counter
+    *cnt = 0;
+}
+
+void drawGame( )
+{
+    cleanFrameBuffer( );
+    drawSnake(snake);
+    drawFruit(fruit);
+    drawFrameBuffer( );
+}
 
 main() {
+    // this counter is used to control the rate of refreshing
+    uint16_t cnt = 0;
+
     meggyInit();
     // Serial out stuff
 //    sei();
     while (1) {
-
-        drawFrameBuffer();
-
-        checkButtonsDown( );
-
-        if (Button_B) {
-            playTone(ToneC3, 50);
-            uart_putchar('b');
-            drawPixel(0,0,redIndex);
-        } 
-
-        if (Button_A) {
-            playTone(ToneD3, 50);
-            uart_putchar('a');
-            drawPixel(1,1,greenIndex);
-        } 
-
-        if (Button_Up) {
-            playTone(ToneE3, 50);
-            uart_putchar('u');
-            drawPixel(2,2,blueIndex);
+        // snake.length * 10 is used to offset the overhead brought by
+        // calculations of the snake body. Since the bigger the body is, the
+        // longer time it takes to compute
+        cnt > 300 - snake.length * 10 ? loop(&cnt) : cnt++;
+        if (gameStage == Ongoing) {
+            drawGame( );
+            checkCollision(&gameStage, snake);
         }
-
-        if (Button_Down) {
-            playTone(ToneF3, 50);
-            uart_putchar('d');
-            drawPixel(3,3,iceIndex);
-        }
-
-        if (Button_Left) {
-            playTone(ToneG3, 50);
-            uart_putchar('l');
-            drawPixel(4,4,magentaIndex);
-        } 
-
-        if (Button_Right) {
-            playTone(ToneA3, 50);
-            uart_putchar('r');
-            drawPixel(5,5,yellowIndex);
-        }
-
     }
 }
-
-
 
 // Interrupt Service Routine (ISR) stuff
 
 // ISR for timer 0
+
 ISR(TIMER0_COMPA_vect, ISR_NAKED)
 {
+    /*
     asm("push r0");
     asm("push r1");
     asm("push r2");
@@ -124,7 +132,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     asm("push r29");
     asm("push r30");
     asm("push r31");
-
+*/
 
     /*
      * Create initial two threads
@@ -139,12 +147,13 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
      *  #0   R31 for thread 2           <- sp[1]
      */
 
-    if(!sp[0] && !sp[1])
-    {
+ //   if(!sp[0] && !sp[1])
+  //  {
         /*
          * To make two identical threads initially, we restore all
          * the registers again
          */
+/*
         asm("pop r31");
         asm("pop r30");
         asm("pop r29");
@@ -177,10 +186,11 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("pop r2");
         asm("pop r1");
         asm("pop r0");
-        
+ */       
         /*
          * Stack configuration for thread 1
          */
+/*
         asm("push r0");
         asm("push r1");
         asm("push r2");
@@ -213,10 +223,11 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("push r29");
         asm("push r30");
         asm("push r31");
-
+*/
         /*
          * Thread configuration for thread 2
          */
+/*
         asm("push r0");
 
         asm("push r0");
@@ -255,15 +266,17 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
 
         sp[1] = SP;
         sp[0] = SP - 0x21;
-        
+ */       
         /*
          * Fix the initial return address of thread 2
          */
+    /*
         SP = SP - 0x41;
         asm("pop r0");
         SP = SP + 0x21;
         asm("push r0");
-    }
+        */
+//    }
 
     /*
      * Scheduling Part
@@ -273,6 +286,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
      * To synchronize two threads, we let the advanced thread 
      * wait slower one
      */
+    /*
     if( schedulingFlag & (1 << MTsynchronize) )
     {   
         SP = sp[0] - 0x20;
@@ -286,11 +300,12 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         //else
         asm(".haha:");
         SP = sp[1];
-    }
+    }*/
     /*
      * Following two condition are used for semaphore 
      * checking
      */
+    /*
     else if( schedulingFlag & (1<< MTsemaphore_1) )
     {
         SP = sp[0];
@@ -298,10 +313,11 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     else if( schedulingFlag & (1<<MTsemaphore_2) )
     {
         SP = sp[1];
-    }
+    }*/
     /*
      * Following two condition are used for RR Scheduling
      */
+    /*
     else if( schedulingFlag & (1<<MTscheduling) )
     {
         SP = sp[0];
@@ -313,10 +329,11 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         schedulingFlag |= 1<<MTscheduling;
     }
     else if( schedulingFlag & (1 << MTEDF) ) 
-    {   
+    { */  
     /*
      * EDF Scheduling
      */
+    /*
         SP = sp[0] - 0x20;
         asm("pop r0");
         SP = sp[1] - 0x20;
@@ -362,7 +379,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     asm("pop r2");
     asm("pop r1");
     asm("pop r0");
-
+*/
     reti();
 }
 
@@ -384,16 +401,15 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
     sph = SPH;
     spl = SPL;
 
-
-
     j++;
-    if (j > 2000) {
+    if (j > 200) {
         uart_putchar(j);
         j = 48;
         //fbGreen[1] = (fbGreen[1] << 1) | (fbGreen[1] >> 7);
     }
 
-    sei();
+//    sei();
+    
 
     SPH = sph;
     SPL = spl;
@@ -427,7 +443,7 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
     sph = SPH;
     spl = SPL;
 
-
+/*
     i++;
     if (i>2000)
     {
@@ -437,8 +453,8 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
             fbRed[i] = (fbRed[i] << 1) | (fbRed[i] >> 7);
         }
     }
-
     sei();
+*/
 
     SPH = sph;
     SPL = spl;

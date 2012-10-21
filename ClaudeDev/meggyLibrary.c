@@ -4,7 +4,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-#include "library.h"
+#include "meggyLibrary.h"
 
 // Extern variables below which will be global variables on all the files
 
@@ -82,6 +82,17 @@ void turnOnFrameBuffer()
       fbBlue[i] = 0;
 	}
 }
+
+void cleanFrameBuffer() {
+    uint8_t i;
+
+    for (i = 0; i < 8; ++i) {
+        fbRed[i] &= 0; 
+        fbGreen[i] &= 0;
+        fbBlue[i] &= 0;
+    }
+}
+
 
 void drawFrameBuffer() {
      uint8_t i;
