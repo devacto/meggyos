@@ -31,7 +31,7 @@ uint16_t sp[2] = {0x0000,0x0000};
 #define MTsynchronize   1
 #define MTsemaphore_1   2
 #define MTsemaphore_2   3
-#define MTEDF
+#define MTEDF           4
 
 uint8_t schedulingFlag = 0;
 
