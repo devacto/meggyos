@@ -47,6 +47,7 @@ typedef struct SNAKE
 
 void eatFruit(Snake*, Fruit*);
 void fruitInit(Fruit*, Snake*);
+void snakeGrow(Snake*);
 void snakeInit(Snake*);
 void displayWelcomePage(Gamestage*, Snake*, Fruit*);
 void displayGameOverPage( );
