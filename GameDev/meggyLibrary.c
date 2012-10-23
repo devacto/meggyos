@@ -328,4 +328,5 @@ void interruptInit() {
     OCR2A  = 100; 
     TIMSK2 = (1<<OCIE2A); // call interrupt on output compare match
 
+	//sei();
 } 
