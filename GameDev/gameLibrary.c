@@ -1,6 +1,5 @@
 #include <inttypes.h>
 #include <avr/io.h>
-#include <avr/interrupt.h>
 
 #include "gameLibrary.h"
 #include "meggyLibrary.h"
@@ -73,7 +72,7 @@ void displayWelcomePage(Gamestage* stage, Snake* snake, Fruit* fruit)
 
 void displayGameOverPage(Gamestage* stage)
 {
-//    cleanFrameBuffer( );
+    cleanFrameBuffer( );
 
     // a cross will show on screen
     drawPixel(0, 0, magentaIndex);
@@ -168,20 +167,14 @@ void drawFruit(Fruit fruit)
     }
 }
 
-void snakeGrow(Snake* snake)
-{
-    snake->body[snake->length].x = snake->body[snake->length - 1].x;
-    snake->body[snake->length].y = snake->body[snake->length - 1].y;
-    snake->length++;
-}
-
-
 void eatFruit(Snake* snake, Fruit* fruit)
 {
     uint8_t i;
     // check if head reaches the same point as the fruit
     if (snake->x == fruit->x && snake->y == fruit->y) {
-        snakeGrow(snake);
+        snake->body[snake->length].x = snake->body[snake->length - 1].x;
+        snake->body[snake->length].y = snake->body[snake->length - 1].y;
+        snake->length++;
         fruitInit(fruit, snake);
     } else {
         // check if the fruit was generated at the same point as any of the
@@ -189,7 +182,10 @@ void eatFruit(Snake* snake, Fruit* fruit)
         for (i = 0; i < snake->bodyShown; ++i) {
             if (snake->body[i].x == fruit->x && 
                 snake->body[i].y == fruit->y) {
-                snakeGrow(snake);
+                snake->body[snake->length].x = snake->body[snake->length - 1].x;
+                snake->body[snake->length].y = snake->body[snake->length - 1].y;
+                snake->bodyShown++;
+                snake->length++;
                 fruitInit(fruit, snake);
                 break;
             }

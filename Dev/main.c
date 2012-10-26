@@ -14,7 +14,6 @@ main() {
 	meggyInit();
 	 // Serial out stuff
 	sei();
-    uint16_t stackH;
    while (1) {
 		// the main function should do nothing
    }
