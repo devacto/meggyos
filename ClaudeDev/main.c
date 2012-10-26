@@ -42,12 +42,18 @@ Gamestage gameStage = Welcome;
 
 void loop(uint16_t* cnt)
 {
+
+
     if (gameStage == Welcome) {
         displayWelcomePage(&gameStage, &snake, &fruit);
     } else if (gameStage == Ongoing) {
     
+        if(!sp[0] || SP == sp[0]+34)
         checkButtonsPress( );
-    
+         
+        if(sp[1]&&(SP <= sp[1] +34))
+            playTone(ToneD6, 50);
+        
         if (Button_Up && snake.dir != Down) {
             snake.dir = 1;
         } else if (Button_Down && snake.dir != Up) {
@@ -57,11 +63,18 @@ void loop(uint16_t* cnt)
         } else if (Button_Right && snake.dir != Left) {
             snake.dir = 4;
         } 
+        
         updateSnakeLocation(&snake);
         eatFruit(&snake, &fruit);
     } else {
-        displayGameOverPage(&gameStage);
+        
+            displayGameOverPage(&gameStage);
+        
+            
+
+        sei();
     }
+    
     // reset counter
     *cnt = 0;
 }
@@ -80,7 +93,7 @@ main() {
 
     meggyInit();
     // Serial out stuff
-//    sei();
+    
     while (1) {
         // snake.length * 10 is used to offset the overhead brought by
         // calculations of the snake body. Since the bigger the body is, the
@@ -99,7 +112,6 @@ main() {
 
 ISR(TIMER0_COMPA_vect, ISR_NAKED)
 {
-    
     asm("push r0");
     asm("push r1");
     asm("push r2");
@@ -147,7 +159,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
      *  #0   R31 for thread 2           <- sp[1]
      */
 
-    if(!sp[0] && !sp[1])
+    if(!sp[0] )
     {
         /*
          * To make two identical threads initially, we restore all
@@ -186,10 +198,11 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("pop r2");
         asm("pop r1");
         asm("pop r0");
-     
-        /*
-         * Stack configuration for thread 1
-         */
+        
+        
+        //
+        // Stack configuration for thread 1
+        //
 
         asm("push r0");
         asm("push r1");
@@ -223,11 +236,13 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("push r29");
         asm("push r30");
         asm("push r31");
+        
+        sp[0] = SP;   
+        //
+        // Thread configuration for thread 2
+        //
 
-        /*
-         * Thread configuration for thread 2
-         */
-
+        asm("push r0");
         asm("push r0");
 
         asm("push r0");
@@ -262,21 +277,30 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("push r29");
         asm("push r30");
         asm("push r31");
-
-
-        sp[1] = SP;
-        sp[0] = SP - 0x21;
-   
-        /*
-         * Fix the initial return address of thread 2
-         */
-    
-        SP = SP - 0x41;
+        
+        //        
+        // Fix the initial return address of thread 2
+        //
+ 
+        SP = SP + 66;
+        
         asm("pop r0");
-        SP = SP + 0x21;
+        asm("pop r1");
+        
+        SP = SP - 34;
+        asm("push r1");
         asm("push r0");
+        sp[1] = SP-32;
+        SP = sp[0];
+        
+        
         
     }
+    
+    if (SP == sp[1] )
+        SP = sp[0];
+    else
+        SP = sp[1];
 
     /*
      * Scheduling Part
@@ -286,7 +310,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
      * To synchronize two threads, we let the advanced thread 
      * wait slower one
      */
-    
+/*    
     if( schedulingFlag & (1 << MTsynchronize) )
     {   
         SP = sp[0] - 0x20;
@@ -301,10 +325,10 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm(".haha:");
         SP = sp[1];
     }
-    /*
-     * Following two condition are used for semaphore 
-     * checking
-     */
+    //
+    // Following two condition are used for semaphore 
+    // checking
+    //
     
     else if( schedulingFlag & (1<< MTsemaphore_1) )
     {
@@ -314,9 +338,9 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     {
         SP = sp[1];
     }
-    /*
-     * Following two condition are used for RR Scheduling
-     */
+    //
+    // Following two condition are used for RR Scheduling
+    //
     
     else if( schedulingFlag & (1<<MTscheduling) )
     {
@@ -330,9 +354,9 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     }
     else if( schedulingFlag & (1 << MTEDF) ) 
     { 
-    /*
-     * EDF Scheduling
-     */
+    //
+    // EDF Scheduling
+    //
     
         SP = sp[0] - 0x20;
         asm("pop r0");
@@ -346,7 +370,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm(".hehe:");
         SP = sp[0];
     }
-
+*/
     asm("pop r31");
     asm("pop r30");
     asm("pop r29");
@@ -383,7 +407,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     reti();
 }
 
-
+/*
 
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
@@ -426,7 +450,8 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
     reti();
 }
 
-
+*/
+/*
 ISR(TIMER2_COMPA_vect, ISR_NAKED)
 {
     static uint16_t sph, spl;
@@ -442,7 +467,7 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
     asm("push r8");
     sph = SPH;
     spl = SPL;
-
+*/
 /*
     i++;
     if (i>2000)
@@ -455,7 +480,7 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
     }
     sei();
 */
-
+/*
     SPH = sph;
     SPL = spl;
     asm("pop r8");
@@ -470,3 +495,4 @@ ISR(TIMER2_COMPA_vect, ISR_NAKED)
 
     reti();
 }
+*/

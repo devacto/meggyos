@@ -31,7 +31,7 @@ void snakeInit(Snake* snake)
         snake->body[i].y = snake->y;
     }
     snake->bodyShown = 0;
-    snake->length = 2;
+    snake->length = 6;
     snake->dir = None;
 }
 
@@ -199,12 +199,12 @@ void eatFruit(Snake* snake, Fruit* fruit)
 void checkCollision(Gamestage* stage, Snake snake)
 {
     uint8_t i;
-
+    
     // compare the coorinate of the head to each element of the body
     for (i = 0; i < snake.bodyShown; ++i) {
         if (snake.x == snake.body[i].x && snake.y == snake.body[i].y) {
-            playTone(ToneD7, 5);
             *stage = Over;
+            //playTone(ToneD7, 5);
             break;
         }
     }
