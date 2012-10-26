@@ -1,10 +1,11 @@
 #!/bin/sh
 
-avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -c library.c
+avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -c meggyLibrary.c
+avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -c gameLibrary.c
 
 avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -c main.c
 
-avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p library.o main.o -o main
+avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p meggyLibrary.o gameLibrary.o main.o -o main
 
 avr-objcopy -O ihex -R .eeprom main main.hex
 

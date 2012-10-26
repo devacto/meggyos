@@ -1,5 +1,6 @@
 #include <inttypes.h>
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #include "gameLibrary.h"
 #include "meggyLibrary.h"
@@ -72,7 +73,7 @@ void displayWelcomePage(Gamestage* stage, Snake* snake, Fruit* fruit)
 
 void displayGameOverPage(Gamestage* stage)
 {
-    cleanFrameBuffer( );
+//    cleanFrameBuffer( );
 
     // a cross will show on screen
     drawPixel(0, 0, magentaIndex);

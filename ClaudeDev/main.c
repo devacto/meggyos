@@ -60,7 +60,8 @@ void loop(uint16_t* cnt)
         updateSnakeLocation(&snake);
         eatFruit(&snake, &fruit);
     } else {
-        displayGameOverPage(&gameStage);
+        //displayGameOverPage(&gameStage);
+        sei( );
     }
     // reset counter
     *cnt = 0;
@@ -79,8 +80,8 @@ main() {
     uint16_t cnt = 0;
 
     meggyInit();
+//    gameStage = Over;
     // Serial out stuff
-//    sei();
     while (1) {
         // snake.length * 10 is used to offset the overhead brought by
         // calculations of the snake body. Since the bigger the body is, the
@@ -99,7 +100,10 @@ main() {
 
 ISR(TIMER0_COMPA_vect, ISR_NAKED)
 {
-    /*
+    
+//    if (gameStage != Over) {
+//        return ;
+//    }
     asm("push r0");
     asm("push r1");
     asm("push r2");
@@ -132,7 +136,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     asm("push r29");
     asm("push r30");
     asm("push r31");
-*/
+
 
     /*
      * Create initial two threads
@@ -345,7 +349,22 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         //else
         asm(".hehe:");
         SP = sp[0];
+    }*/
+
+    if (gameStage == Over && i > 100) {
+        i= 80;
+        if (i % 3 == 0) {
+            playTone(ToneC4, 5);
+        } else if (i % 3 == 1) {
+        playTone(ToneD4, 5);
+        } else {
+        playTone(ToneE5, 5);
+        }
+        uart_putchar('b');
+       //sei( );
     }
+    else
+        i++;
 
     asm("pop r31");
     asm("pop r30");
@@ -379,7 +398,7 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
     asm("pop r2");
     asm("pop r1");
     asm("pop r0");
-*/
+
     reti();
 }
 
@@ -387,9 +406,10 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
 
 ISR(TIMER1_COMPA_vect, ISR_NAKED)
 {
-    static uint16_t sph, spl;
-
-    asm("push r0");
+//    if (gameStage != Over) {
+//        return ;
+//    }
+     asm("push r0");
     asm("push r1");
     asm("push r2");
     asm("push r3");
@@ -398,21 +418,65 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
     asm("push r6");
     asm("push r7");
     asm("push r8");
-    sph = SPH;
-    spl = SPL;
+    asm("push r9");
+    asm("push r10");
+    asm("push r11");
+    asm("push r12");
+    asm("push r13");
+    asm("push r14");
+    asm("push r15");
+    asm("push r16");
+    asm("push r17");
+    asm("push r18");
+    asm("push r19");
+    asm("push r20");
+    asm("push r21");
+    asm("push r22");
+    asm("push r23");
+    asm("push r24");
+    asm("push r25");
+    asm("push r26");
+    asm("push r27");
+    asm("push r28");
+    asm("push r29");
+    asm("push r30");
+    asm("push r31");
 
-    j++;
-    if (j > 200) {
-        uart_putchar(j);
-        j = 48;
-        //fbGreen[1] = (fbGreen[1] << 1) | (fbGreen[1] >> 7);
+
+    if (gameStage == Over) {
+//        j++;
+//        if (j > 50) {
+           displayGameOverPage(&gameStage);
+   //        uart_putchar('a');
+//           j = 50;
+//        }
+    
+//        sei();
     }
 
-//    sei();
-    
-
-    SPH = sph;
-    SPL = spl;
+       asm("pop r31");
+    asm("pop r30");
+    asm("pop r29");
+    asm("pop r28");
+    asm("pop r27");
+    asm("pop r26");
+    asm("pop r25");
+    asm("pop r24");
+    asm("pop r23");
+    asm("pop r22");
+    asm("pop r21");
+    asm("pop r20");
+    asm("pop r19");
+    asm("pop r18");
+    asm("pop r17");
+    asm("pop r16");
+    asm("pop r15");
+    asm("pop r14");
+    asm("pop r13");
+    asm("pop r12");
+    asm("pop r11");
+    asm("pop r10");
+    asm("pop r9");
     asm("pop r8");
     asm("pop r7");
     asm("pop r6");
@@ -422,6 +486,7 @@ ISR(TIMER1_COMPA_vect, ISR_NAKED)
     asm("pop r2");
     asm("pop r1");
     asm("pop r0");
+
 
     reti();
 }
