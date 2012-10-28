@@ -43,8 +43,11 @@ typedef struct SNAKE
     Body       body[1<<6];// EXCLUDING the head of snake
     uint8_t    length;
     uint8_t    bodyShown; // the number of elements that has been shown on screen
+    uint8_t    life;
 } Snake;
 
+void welcomeRingTone();
+void showGraphics(uint16_t);
 void eatFruit(Snake*, Fruit*);
 void fruitInit(Fruit*, Snake*);
 void snakeGrow(Snake*);
@@ -54,4 +57,4 @@ void displayGameOverPage( );
 void validateCoordinate(int8_t*);
 void updateSnakeLocation(Snake*);
 void drawSnake(Snake); 
-void checkCollision(Gamestage*, Snake);
+void checkCollision(Gamestage*, Snake*, Fruit*);

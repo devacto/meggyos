@@ -42,17 +42,17 @@ Gamestage gameStage = Welcome;
 
 void loop(uint16_t* cnt)
 {
-
-
     if (gameStage == Welcome) {
+
         displayWelcomePage(&gameStage, &snake, &fruit);
+
     } else if (gameStage == Ongoing) {
     
-        if(!sp[0] || SP == sp[0]+34)
+//        if(!sp[0] || SP == sp[0]+34)
         checkButtonsPress( );
          
-        if(sp[1]&&(SP <= sp[1] +34))
-            playTone(ToneD6, 50);
+//        if(sp[1]&&(SP <= sp[1] +34))
+//            playTone(ToneD6, 50);
         
         if (Button_Up && snake.dir != Down) {
             snake.dir = 1;
@@ -66,13 +66,11 @@ void loop(uint16_t* cnt)
         
         updateSnakeLocation(&snake);
         eatFruit(&snake, &fruit);
-    } else {
-        
-            displayGameOverPage(&gameStage);
-        
-            
 
-        sei();
+    } else {
+
+        displayGameOverPage(&gameStage);
+//        sei();
     }
     
     // reset counter
@@ -90,9 +88,26 @@ void drawGame( )
 main() {
     // this counter is used to control the rate of refreshing
     uint16_t cnt = 0;
+    uint16_t frame = 0;
 
     meggyInit();
     // Serial out stuff
+    welcomeRingTone();
+    
+    while (1) {
+        // cnt % 256 == 0
+        if (cnt % 128 == 0) {
+            ++frame;
+        }
+        if (cnt > 3000) {
+            break;
+        } else {
+            ++cnt;
+        }
+        showGraphics(frame);
+    }
+    
+    cnt = 0;
     
     while (1) {
         // snake.length * 10 is used to offset the overhead brought by
@@ -101,7 +116,7 @@ main() {
         cnt > 300 - snake.length * 10 ? loop(&cnt) : cnt++;
         if (gameStage == Ongoing) {
             drawGame( );
-            checkCollision(&gameStage, snake);
+            checkCollision(&gameStage, &snake, &fruit);
         }
     }
 }
@@ -292,9 +307,6 @@ ISR(TIMER0_COMPA_vect, ISR_NAKED)
         asm("push r0");
         sp[1] = SP-32;
         SP = sp[0];
-        
-        
-        
     }
     
     if (SP == sp[1] )

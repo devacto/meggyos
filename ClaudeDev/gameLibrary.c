@@ -31,8 +31,80 @@ void snakeInit(Snake* snake)
         snake->body[i].y = snake->y;
     }
     snake->bodyShown = 0;
-    snake->length = 6;
+    snake->length = 1;
     snake->dir = None;
+    snake->life = 3;
+}
+
+void welcomeRingTone( )
+{
+    playTone(ToneD3, 30);
+    playTone(ToneE3, 40);
+    playTone(ToneC3, 40);
+}
+
+void showGraphics(uint16_t cnt)
+{
+    uint8_t i, j;
+    // cnt % 4
+    uint8_t rem = cnt % 4;
+    enum color_index color1 = yellowIndex, color2 = greenIndex, color3 = blueIndex,
+                     color4 = iceIndex;
+/*
+    switch (rem) {
+        case 0: color1 = yellowIndex; 
+                color2 = greenIndex;
+                color3 = blueIndex;
+                color4 = iceIndex; break;
+        case 1: color1 = iceIndex; 
+                color2 = yellowIndex;
+                color3 = greenIndex;
+                color4 = blueIndex; break;
+        case 2: color1 = blueIndex;
+                color2 = iceIndex;
+                color3 = yellowIndex;
+                color4 = greenIndex; break;
+        case 3: color1 = greenIndex;
+                color2 = blueIndex;
+                color3 = iceIndex;
+                color4 = yellowIndex; break;
+    }
+    */
+    
+    cleanFrameBuffer();
+
+    if (rem == 0) {
+        for (i = 3; i <= 4; ++i) {
+            for (j = 3; j <= 4; ++j) {
+                drawPixel(j, i, color1);
+            }
+        }
+    } else if (rem == 1) {
+        for (i = 2; i <= 5; ++i) {
+            for (j = 2; j <= 5; ++j) {
+                if (i == 2 || i == 5 || j ==2 || j == 5) {
+                    drawPixel(j, i, color2);
+                }
+            }
+        }
+    } else if (rem == 2) {
+        for (i = 1; i <= 6; ++i) {
+            for (j = 1; j <= 6; ++j) {
+                if (i == 1 || i == 6 || j == 1 || j == 6) {
+                    drawPixel(j, i, color3);
+                }
+            }
+        }
+    } else {
+        for (i = 0; i <= 7; ++i) {
+            for (j = 0; j <= 7; ++j) {
+                if (i == 0 || i == 7 || j == 0 || j == 7) {
+                    drawPixel(j, i, color4);
+                }
+            }
+        }
+    }
+    drawFrameBuffer();
 }
 
 void displayWelcomePage(Gamestage* stage, Snake* snake, Fruit* fruit)
@@ -174,7 +246,6 @@ void snakeGrow(Snake* snake)
     snake->length++;
 }
 
-
 void eatFruit(Snake* snake, Fruit* fruit)
 {
     uint8_t i;
@@ -196,15 +267,25 @@ void eatFruit(Snake* snake, Fruit* fruit)
     }
 }
 
-void checkCollision(Gamestage* stage, Snake snake)
+void checkCollision(Gamestage* stage, Snake* snake, Fruit* fruit)
 {
     uint8_t i;
+    uint8_t tmpLifePt;
     
     // compare the coorinate of the head to each element of the body
-    for (i = 0; i < snake.bodyShown; ++i) {
-        if (snake.x == snake.body[i].x && snake.y == snake.body[i].y) {
-            *stage = Over;
-            //playTone(ToneD7, 5);
+    for (i = 0; i < snake->bodyShown; ++i) {
+        if (snake->x == snake->body[i].x && snake->y == snake->body[i].y) {
+            playTone(ToneD7, 5);
+            snake->life--;
+            if (snake->life == 0) {
+                *stage = Over;
+            } else {
+                *stage = Ongoing;
+                tmpLifePt = snake->life;
+                snakeInit(snake);
+                snake->life = tmpLifePt;
+                fruitInit(fruit, snake);
+            }
             break;
         }
     }
