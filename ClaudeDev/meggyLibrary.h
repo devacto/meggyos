@@ -206,3 +206,4 @@ void meggyInit(); // this is for the initialisation which will be the first line
 void drawPixel(uint8_t row, uint8_t col, enum color_index color); // this is to put colour in a pixel at position (x,y,color)
 
 void interruptInit();
+

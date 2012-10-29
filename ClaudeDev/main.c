@@ -9,7 +9,7 @@
 
 #define MULTI_THREAD_NUMBER 2
 #define MULTI_SP_LENGTH 34
-#define MULTI_SWITCH_RATE 100
+#define MULTI_SWITCH_RATE 250
 
 /*
  * This var is used to store the Stack Pointer where 
@@ -53,9 +53,12 @@ void loop(uint16_t* cnt)
         // when the game is on, buzzer will make a sound at the same time
         if (runningThread == 0) {
             checkButtonsPress( );
-        } else {
-            playTone(ToneB2, 2);
+        } 
+        /*
+        if (runningThread == 1) {
+            playTone(ToneB2, 40);
         }
+        */
          
         if (Button_Up && snake.dir != Down) {
             snake.dir = 1;
@@ -96,16 +99,23 @@ void getAddr(unsigned char num)
 
 void putAddr()
 {
+    /*
     if (runningThread == 0 && globalCounter <= MULTI_SWITCH_RATE) {
         globalCounter++;
         return ;
     }
+    */
     if (runningThread == 0) {
         for (globalTemp = 0; globalTemp < MULTI_SP_LENGTH; globalTemp++) {
             multiSP[0][globalTemp] = (*((unsigned char *)(SP + globalTemp)));
-            (*(unsigned char *)(SP + globalTemp)) = multiSP[1][globalTemp];
         }
-        runningThread = 1;
+
+        if (++globalCounter > MULTI_SWITCH_RATE) {
+            for(globalTemp=0; globalTemp < MULTI_SP_LENGTH; globalTemp++) {
+                (*(unsigned char *)(SP + globalTemp)) = multiSP[1][globalTemp];
+            }
+            runningThread = 1;
+        }
     } else {
         for (globalTemp = 0; globalTemp < MULTI_SP_LENGTH; globalTemp++) {
             multiSP[1][globalTemp] = (*((unsigned char *)(SP + globalTemp)));
@@ -130,12 +140,12 @@ main() {
         runningThread = 0;
         getAddr(0);
         getAddr(1);
-        uart_putchar('a');
     }
 
     // this while loop is used to display the welcome splash screen
+    
     while (1) {
-        if (cnt % 64 == 0) {
+        if (cnt % 32 == 0) {
             ++frame;
         }
         // the screen only lasts until cnt reaches 3000
@@ -153,19 +163,28 @@ main() {
     }
     
     cnt = 0;
-    
+
+    if (schedulingFlag & (1 << MTscheduling)) {
+        runningThread = 0;
+        getAddr(0);
+        getAddr(1);
+    }
+
     // this loop is the main loop of the game
     while (1) {
         // snake.length * 10 is used to offset the overhead brought by
         // calculations of the snake body. Since the bigger the body is, the
         // longer time it takes to compute
-        cnt > 300 - snake.length * 10 ? loop(&cnt) : cnt++;
+        cnt > 301 - snake.length * 10 ? loop(&cnt) : cnt++;
         if (gameStage == Ongoing) {
             // draw snake and fruit on the slate
             drawGame( );
             checkCollision(&gameStage, &snake, &fruit);
         }
-        //putAddr();
+        if (runningThread == 1) {
+            playTone(ToneB2, 2);
+        }
+        putAddr();
     }
 }
 
