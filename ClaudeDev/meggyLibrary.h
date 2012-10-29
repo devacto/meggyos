@@ -192,6 +192,7 @@ uint8_t getButtons();
 void delay(uint16_t ms);
 
 
+// This is for debugging
 void uart_init();
 void uart_putchar(char c);
 
@@ -200,16 +201,8 @@ void uart_putchar(char c);
 void checkButtonsDown();
 void checkButtonsPress();
 
-// TODO methods to implement
 void meggyInit(); // this is for the initialisation which will be the first line of any Meggy programs
-void clearPixel();
-void setAuxLED(); // this is to draw on the auxiliary LEDs which are on the top of the display screen
 
 void drawPixel(uint8_t row, uint8_t col, enum color_index color); // this is to put colour in a pixel at position (x,y,color)
-int readPixel(); // this is to read the colour at position (x,y)
 
 void interruptInit();
-
-void drawPx(); // this is to put colour in a pixel at position (x,y,color)
-int readPx(); // this is to read the colour at position (x,y)
-

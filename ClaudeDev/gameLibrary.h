@@ -43,18 +43,18 @@ typedef struct SNAKE
     Body       body[1<<6];// EXCLUDING the head of snake
     uint8_t    length;
     uint8_t    bodyShown; // the number of elements that has been shown on screen
-    uint8_t    life;
+    uint8_t    life; // a snake has 3 life points, when it reaches 0 the game is over
 } Snake;
 
-void welcomeRingTone();
-void showGraphics(uint16_t);
-void eatFruit(Snake*, Fruit*);
-void fruitInit(Fruit*, Snake*);
-void snakeGrow(Snake*);
-void snakeInit(Snake*);
-void displayWelcomePage(Gamestage*, Snake*, Fruit*);
-void displayGameOverPage( );
-void validateCoordinate(int8_t*);
-void updateSnakeLocation(Snake*);
-void drawSnake(Snake); 
-void checkCollision(Gamestage*, Snake*, Fruit*);
+void welcomeRingTone(uint16_t); // plays a piece of tone when the machine is turned on
+void showSplashScreen(uint16_t); // show splash screen
+void eatFruit(Snake*, Fruit*); // the action when snake eats a fruit
+void fruitInit(Fruit*, Snake*); // initialize the position of the fruit
+void snakeGrow(Snake*); // snake length grows by 1 when eats a fruit
+void snakeInit(Snake*); // initialize the position, length etc. of the snake
+void displayWelcomePage(Gamestage*, Snake*, Fruit*); // show the screen of 'Hi'
+void displayGameOverPage( ); // displays when game is over
+void validateCoordinate(int8_t*); // validate the coordinate that is generated 
+void updateSnakeLocation(Snake*); // update coordinat of the snake as well as its body
+void drawSnake(Snake); // draw snake on the screen
+void checkCollision(Gamestage*, Snake*, Fruit*); // check if snake collides with its body

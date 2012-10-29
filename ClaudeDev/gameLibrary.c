@@ -36,49 +36,38 @@ void snakeInit(Snake* snake)
     snake->life = 3;
 }
 
-void welcomeRingTone( )
+void welcomeRingTone(uint16_t sound)
 {
-    playTone(ToneD3, 30);
-    playTone(ToneE3, 40);
-    playTone(ToneC3, 40);
+    uint8_t tmp = sound % 9;
+    switch (sound) {
+        case 0: playTone(ToneF3, 40); break;
+        case 1: playTone(ToneE3, 30); break;
+        case 2: playTone(ToneD3, 35); break;
+        case 3: playTone(ToneC4, 40); break;
+        case 4: playTone(ToneG4, 30); break;
+        case 5: playTone(ToneF4, 50); break;
+        default: break;
+    }
 }
 
-void showGraphics(uint16_t cnt)
+void showSplashScreen(uint16_t cnt)
 {
     uint8_t i, j;
     // cnt % 4
     uint8_t rem = cnt % 4;
     enum color_index color1 = yellowIndex, color2 = greenIndex, color3 = blueIndex,
                      color4 = iceIndex;
-/*
-    switch (rem) {
-        case 0: color1 = yellowIndex; 
-                color2 = greenIndex;
-                color3 = blueIndex;
-                color4 = iceIndex; break;
-        case 1: color1 = iceIndex; 
-                color2 = yellowIndex;
-                color3 = greenIndex;
-                color4 = blueIndex; break;
-        case 2: color1 = blueIndex;
-                color2 = iceIndex;
-                color3 = yellowIndex;
-                color4 = greenIndex; break;
-        case 3: color1 = greenIndex;
-                color2 = blueIndex;
-                color3 = iceIndex;
-                color4 = yellowIndex; break;
-    }
-    */
     
     cleanFrameBuffer();
 
+    // the innermost circle of lights
     if (rem == 0) {
         for (i = 3; i <= 4; ++i) {
             for (j = 3; j <= 4; ++j) {
                 drawPixel(j, i, color1);
             }
         }
+    // the second circle of lights
     } else if (rem == 1) {
         for (i = 2; i <= 5; ++i) {
             for (j = 2; j <= 5; ++j) {
@@ -87,6 +76,7 @@ void showGraphics(uint16_t cnt)
                 }
             }
         }
+    // third
     } else if (rem == 2) {
         for (i = 1; i <= 6; ++i) {
             for (j = 1; j <= 6; ++j) {
@@ -95,6 +85,7 @@ void showGraphics(uint16_t cnt)
                 }
             }
         }
+    // the outermost circle of lights
     } else {
         for (i = 0; i <= 7; ++i) {
             for (j = 0; j <= 7; ++j) {
@@ -104,6 +95,7 @@ void showGraphics(uint16_t cnt)
             }
         }
     }
+    // write to the slate
     drawFrameBuffer();
 }
 
@@ -129,6 +121,7 @@ void displayWelcomePage(Gamestage* stage, Snake* snake, Fruit* fruit)
     drawPixel(4, 1, iceIndex);
     drawPixel(6, 1, iceIndex);
 
+    // write to the slate
     drawFrameBuffer( );
 
     checkButtonsPress( );
@@ -276,11 +269,15 @@ void checkCollision(Gamestage* stage, Snake* snake, Fruit* fruit)
     for (i = 0; i < snake->bodyShown; ++i) {
         if (snake->x == snake->body[i].x && snake->y == snake->body[i].y) {
             playTone(ToneD7, 5);
+            // every time it collides, life point decrements by 1
+            // as soon as it reaches 0, the game will be over
             snake->life--;
             if (snake->life == 0) {
                 *stage = Over;
             } else {
                 *stage = Ongoing;
+                // since snakeInit will reset the life point to 3, we may first 
+                // store it in a tmp and the assigns it back
                 tmpLifePt = snake->life;
                 snakeInit(snake);
                 snake->life = tmpLifePt;
